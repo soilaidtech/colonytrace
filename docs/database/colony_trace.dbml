@@ -1,0 +1,264 @@
+
+enum roles { 
+    admin
+    site_manager
+    director
+}
+
+Table Employee {
+    employee_id int [pk]
+    first_name varchar [not null]
+    role roles
+    email varchar [not null]
+    phone_number varchar [not null]
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
+Table Trip {
+    trip_id int [pk]
+    vehicle_id varchar [not null]
+    driver_id int [ref: > Employee.employee_id]
+    source_location varchar [not null]
+    trip_status varchar [not null]
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
+Table WasteReceivingEvent {
+    receiving_id int [pk]
+    trip_id int [ref: > Trip.trip_id]
+    received_date timestamp [not null]
+    waste_source varchar [not null]
+    waste_type waste_type_enum
+    gross_weight float [not null]
+    contamination_level contamination_level_enum
+    waste_accepted boolean [not null]
+    received_by int [ref: > Employee.employee_id]
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
+Table WasteSortingEvent {
+    sorting_id int [pk]
+    receiving_id int [ref: > WasteReceivingEvent.receiving_id]
+    sorted_date timestamp [not null]
+    feedstock_weight float [not null]
+    compost_weight float [not null]
+    plastic_weight float [not null]
+    reject_weight float [not null]
+    storage_container_id varchar [not null]
+    sorted_by int [ref: > Employee.employee_id]
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
+Table WasteBatch{
+    waste_batch_id int [pk]
+    sorting_id int [ref: > WasteSortingEvent.sorting_id]
+    batch_weight float [not null]
+    batch_status status_enum
+    created_by int [ref: > Employee.employee_id]
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
+Table Recipe {
+    recipe_id int [pk]
+    sorting_id int [ref: > WasteSortingEvent.sorting_id]
+    recipe_name varchar [not null]
+    feedstock_weight float [not null]
+    water_content float [not null]
+    other_ingredients varchar [not null]
+    prepared_by int [ref: > Employee.employee_id]
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
+Table RecipeIngredient {
+    ingredient_id int [pk]
+    recipe_id int [ref: > Recipe.recipe_id]
+    sorting_id int [ref: > WasteSortingEvent.sorting_id]
+    ingredient_weight float [not null]
+    notes varchar
+    created_at timestamp [not null]
+}
+
+Table BreedingBatch {
+    breeding_batch_id int [pk]
+    start_date timestamp [not null]
+    harvest_date timestamp
+    prepupae_weight float [not null]
+    status status_enum
+    created_by int [ref: > Employee.employee_id]
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
+Table EggCollectionEvent {
+    egg_collection_id int [pk]
+    breeding_batch_id int [ref: > BreedingBatch.breeding_batch_id]
+    empty_eggie_weight float [not null]
+    full_eggie_weight float [not null]
+    collected_by int [ref: > Employee.employee_id]
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
+Table NurseryBatch {
+    nursery_batch_id int [pk]
+    egg_collection_id int [ref: > EggCollectionEvent.egg_collection_id]
+    start_date timestamp [not null]
+    status status_enum
+    created_by int [ref: > Employee.employee_id]
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
+Table LarvaeBatch {
+    larvae_batch_id int [pk]
+    nursery_batch_id int [ref: > NurseryBatch.nursery_batch_id]
+    start_date timestamp [not null]
+    initial_weight float [not null]
+    batch_status status_enum
+    mixed_batch boolean [not null]
+    batch_source batch_source_enum
+    created_by int [ref: > Employee.employee_id]
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
+Table FeedingEvent {
+    feeding_event_id int [pk]
+    larvae_batch_id int [ref: > LarvaeBatch.larvae_batch_id]
+    recipe_id int [ref: > Recipe.recipe_id]
+    feed_date timestamp [not null]
+    larvae_weight float [not null]
+    feed_weight float [not null]
+    feeding_ratio float [not null]
+    fed_by int [ref: > Employee.employee_id]
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
+Table HarvestEvent {
+    harvest_event_id int [pk]
+    larvae_batch_id int [ref: > LarvaeBatch.larvae_batch_id]
+    harvest_date timestamp [not null]
+    wet_larvae_weight float [not null]
+    prepupae_weight float [not null]
+    frass_weight float [not null]
+    reject_weight float [not null]
+    harvest_reason varchar [not null]
+    harvested_by int [ref: > Employee.employee_id]
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
+Table HarvestBatchLink {
+    harvest_batch_link_id int [pk]
+    harvest_event_id int [ref: > HarvestEvent.harvest_event_id]
+    larvae_batch_id int [ref: > LarvaeBatch.larvae_batch_id]
+    contribution_notes varchar
+    created_at timestamp [not null]
+}
+
+Table DryingEvent {
+    drying_event_id int [pk]
+    harvest_batch_link int [ref: > HarvestBatchLink.harvest_batch_link_id]
+    dryer_id varchar [not null]
+    drying_date timestamp [not null]
+    wet_input_weight float [not null]
+    dried_output_weight float [not null]
+    start_time timestamp [not null]
+    stop_time timestamp [not null]
+    duration_minutes int [not null]
+    moisture_content float [not null]
+    dried_by int [ref: > Employee.employee_id]
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
+Table ProductBatch {
+    product_batch_id int [pk]
+    product_id int [ref: > Product.product_id]
+    drying_event_id int [ref: > DryingEvent.drying_event_id]
+    harvest_batch_link_id int [ref: > HarvestBatchLink.harvest_batch_link_id]
+    production_date timestamp [not null]
+    quantity_produced float [not null]
+    quantity_available float [not null]
+    packaging_status packaging_status_enum
+    created_by int [ref: > Employee.employee_id]
+    product_batch_expiry timestamp
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
+Table Product {
+    product_id int [pk]
+    product_name varchar [not null]
+    product_type product_type_enum
+    unit_of_measure varchar [not null]
+    unit_price float [not null]
+    batch_weight float [not null]
+    batch_status status_enum
+    created_by int [ref: > Employee.employee_id]
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
+Table Customer {
+    customer_id int [pk]
+    customer_name varchar [not null]
+    customer_type customer_type_enum
+    email varchar
+    phone_number varchar [not null]
+    location varchar [not null]
+    status varchar [not null]
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
+Table ProductSale {
+    sale_id int [pk]
+    customer_id int [ref: > Customer.customer_id]
+    product_batch_id int [ref: > ProductBatch.product_batch_id]
+    product_id int [ref: > Product.product_id]
+    sale_date timestamp [not null]
+    quantity_sold float [not null]
+    unit_price float [not null]
+    total_price float [not null]
+    payment_status payment_status_enum
+    sold_by int [ref: > Employee.employee_id]
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
+Table InventoryMovement {
+    inventory_movement_id int [pk]
+    product_batch_id int [ref: > ProductBatch.product_batch_id]
+    movement_date timestamp [not null]
+    quantity_moved float [not null]
+    moved_by int [ref: > Employee.employee_id]
+    reason_for_movement varchar [not null]
+    movement_type movement_type_enum
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
