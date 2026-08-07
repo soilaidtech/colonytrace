@@ -271,6 +271,7 @@ Table HarvestEvent {
     harvest_event_id int [pk]
     harvest_date timestamp [not null]
     harvested_by int [ref: > Employee.employee_id]
+    harvest_reason varchar [not null]
     notes varchar
     created_at timestamp [not null]
     updated_at timestamp [not null]
@@ -278,20 +279,25 @@ Table HarvestEvent {
 
 Table HarvestBatch {
     harvest_batch_id int [pk]
-    harvest_event_id int [ref: > HarvestEvent.harvest_event_id]
-    larvae_batch_id int [ref: > LarvaeBatch.larvae_batch_id]
+    harvest_event_id int [ref: > HarvestEvent.harvest_event_id, not null]
     wet_larvae_weight float [not null]
     prepupae_weight float [not null]
     frass_weight float [not null]
     reject_weight float [not null]
-    harvest_reason varchar [not null]
     contribution_notes varchar
+    created_at timestamp [not null]
+}
+
+Table HarvestedLarvaeBatch {
+    harvested_larvae_batch_id int [pk]
+    harvest_event_id int [ref: > HarvestEvent.harvest_event_id, not null]
+    larvae_batch_id int [ref: > LarvaeBatch.larvae_batch_id, not null]
     created_at timestamp [not null]
 }
 
 Table DryingEvent {
     drying_event_id int [pk]
-    harvest_batch int [ref: > HarvestBatch.harvest_batch_id]
+    harvest_batch_id int [ref: > HarvestBatch.harvest_batch_id, not null]
     dryer_id varchar [not null]
     drying_date timestamp [not null]
     wet_input_weight float [not null]
