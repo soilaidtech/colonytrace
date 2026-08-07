@@ -116,6 +116,7 @@ Table BreedingBatch {
 Table EggCollectionEvent {
     egg_collection_id int [pk]
     breeding_cage_id int [ref: > BreedingCage.breeding_cage_id]
+    collection_date timestamp [not null]
     empty_eggie_weight float [not null]
     full_eggie_weight float [not null]
     collected_by int [ref: > Employee.employee_id]
