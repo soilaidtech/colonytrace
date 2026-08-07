@@ -314,7 +314,7 @@ Table Product {
     product_type product_type_enum
     unit_of_measure varchar [not null]
     unit_price float [not null]
-    batch_weight float [not null]
+    package_size float [not null]
     batch_status status_enum
     created_by int [ref: > Employee.employee_id]
     notes varchar
