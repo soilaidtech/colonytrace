@@ -128,7 +128,7 @@ Table Trip {
     source_location varchar [not null]
     trip_status trip_status_enum
     dispatch_time timestamp [not null]
-    return_time timestamp [not null]
+    return_time timestamp [null]
     notes varchar
     created_at timestamp [not null]
     updated_at timestamp [not null]
