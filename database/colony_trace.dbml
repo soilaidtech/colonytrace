@@ -330,7 +330,7 @@ Table DriedLarvaeBatch {
 Table ProductBatch {
     product_batch_id int [pk]
     product_id int [ref: > Product.product_id]
-    drying_event_id int [ref: > DryingEvent.drying_event_id]
+    dried_larvae_batch_id int [ref: > DriedLarvaeBatch.dried_larvae_batch_id, null]
     harvest_batch_id int [ref: > HarvestBatch.harvest_batch_id]
     production_date timestamp [not null]
     quantity_produced float [not null]
