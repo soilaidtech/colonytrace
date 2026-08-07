@@ -5,6 +5,82 @@ enum roles {
     director
 }
 
+enum waste_type_enum {
+    food_waste
+    agricultural_waste
+    industrial_waste
+    plastic_waste
+    residential_waste
+    other
+}
+
+enum contamination_level_enum {
+    low
+    medium
+    high
+}
+
+enum cage_status_enum {
+    full
+    empty
+    maintenance
+    active
+}
+
+enum breeder_source_enum {
+    internal
+    external
+}
+
+enum status_enum {
+    active
+    inactive
+    completed
+    pending
+}
+
+enum larvae_source_enum {
+    internal
+    external
+}
+
+enum product_type_enum {
+    dried_larvae
+    frass
+    prepupae
+    wet_larvae
+    other
+}
+
+enum packaging_status_enum {
+    packaged
+    unpackaged
+    in_progress
+}
+
+enum customer_type_enum {
+    chicken_farm
+    fish_farm
+    pig_farm
+    feed_miller
+    crop_farm
+    tree_plantation
+    other
+}
+
+enum payment_status_enum {
+    paid
+    unpaid
+    pending
+}
+
+enum movement_type_enum {
+    addition
+    removal
+    transfer
+}
+
+
 Table Employee {
     employee_id int [pk]
     first_name varchar [not null]
@@ -92,7 +168,7 @@ Table RecipeIngredient {
 Table BreedingCage {
     breeding_cage_id int [pk]
     cage_identifier varchar [not null]
-    cage_status status_enum
+    cage_status cage_status_enum
     created_by int [ref: > Employee.employee_id]
     notes varchar
     created_at timestamp [not null]
@@ -143,7 +219,7 @@ Table LarvaeBatch {
     initial_weight float [not null]
     batch_status status_enum
     mixed_batch boolean [not null]
-    batch_source batch_source_enum
+    batch_source larvae_source_enum
     created_by int [ref: > Employee.employee_id]
     notes varchar
     created_at timestamp [not null]
