@@ -127,7 +127,8 @@ Table Trip {
     driver_id int [ref: > Employee.employee_id]
     source_location varchar [not null]
     trip_status trip_status_enum
-    arrival_time timestamp [not null]
+    dispatch_time timestamp [not null]
+    return_time timestamp [not null]
     notes varchar
     created_at timestamp [not null]
     updated_at timestamp [not null]
