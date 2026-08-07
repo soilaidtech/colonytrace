@@ -255,8 +255,8 @@ Table HarvestEvent {
     updated_at timestamp [not null]
 }
 
-Table HarvestBatchLink {
-    harvest_batch_link_id int [pk]
+Table HarvestBatch {
+    harvest_batch_id int [pk]
     harvest_event_id int [ref: > HarvestEvent.harvest_event_id]
     larvae_batch_id int [ref: > LarvaeBatch.larvae_batch_id]
     contribution_notes varchar
@@ -265,7 +265,7 @@ Table HarvestBatchLink {
 
 Table DryingEvent {
     drying_event_id int [pk]
-    harvest_batch_link int [ref: > HarvestBatchLink.harvest_batch_link_id]
+    harvest_batch int [ref: > HarvestBatch.harvest_batch_id]
     dryer_id varchar [not null]
     drying_date timestamp [not null]
     wet_input_weight float [not null]
@@ -284,7 +284,7 @@ Table ProductBatch {
     product_batch_id int [pk]
     product_id int [ref: > Product.product_id]
     drying_event_id int [ref: > DryingEvent.drying_event_id]
-    harvest_batch_link_id int [ref: > HarvestBatchLink.harvest_batch_link_id]
+    harvest_batch_id int [ref: > HarvestBatch.harvest_batch_id]
     production_date timestamp [not null]
     quantity_produced float [not null]
     quantity_available float [not null]
