@@ -184,9 +184,10 @@ Table Recipe {
 
 Table RecipeIngredient {
     ingredient_id int [pk]
-    recipe_id int [ref: > Recipe.recipe_id]
-    sorting_id int [ref: > WasteSortingEvent.sorting_id, null]
+    recipe_id int [ref: > Recipe.recipe_id, not null]
+    ingredient_name varchar [not null]
     ingredient_weight float [not null]
+    waste_batch_id int [ref: > WasteBatch.waste_batch_id, null]
     notes varchar
     created_at timestamp [not null]
     updated_at timestamp [not null]
