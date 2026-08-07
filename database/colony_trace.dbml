@@ -242,7 +242,6 @@ Table FeedingEvent {
 
 Table HarvestEvent {
     harvest_event_id int [pk]
-    larvae_batch_id int [ref: > LarvaeBatch.larvae_batch_id]
     harvest_date timestamp [not null]
     wet_larvae_weight float [not null]
     prepupae_weight float [not null]
