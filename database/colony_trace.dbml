@@ -396,6 +396,9 @@ Table Expense {
     expense_date timestamp [not null]
     amount decimal(12,2) [not null]
     category expense_category_enum
+    trip_id int [ref: > Trip.trip_id, null]
+    drying_event_id int [ref: > DryingEvent.drying_event_id, null]
+    product_batch_id int [ref: > ProductBatch.product_batch_id, null]
     description varchar
     incurred_by int [ref: > Employee.employee_id]
     notes varchar
