@@ -136,7 +136,6 @@ Table WasteBatch{
     waste_batch_id int [pk]
     sorting_id int [ref: > WasteSortingEvent.sorting_id]
     batch_weight float [not null]
-    batch_status status_enum
     created_by int [ref: > Employee.employee_id]
     notes varchar
     created_at timestamp [not null]
