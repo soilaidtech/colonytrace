@@ -337,7 +337,7 @@ Table Product {
     product_name varchar [not null]
     product_type product_type_enum
     unit_of_measure varchar [not null]
-    unit_price float [not null]
+    unit_price decimal(12,2) [not null]
     package_size float [not null]
     batch_status status_enum
     created_by int [ref: > Employee.employee_id]
@@ -366,8 +366,8 @@ Table ProductSale {
     product_id int [ref: > Product.product_id]
     sale_date timestamp [not null]
     quantity_sold float [not null]
-    unit_price float [not null]
-    total_price float [not null]
+    unit_price decimal(12,2) [not null]
+    total_price decimal(12,2) [not null]
     payment_status payment_status_enum
     sold_by int [ref: > Employee.employee_id]
     notes varchar
@@ -391,7 +391,7 @@ Table InventoryMovement {
 Table Expense {
     expense_id int [pk]
     expense_date timestamp [not null]
-    amount float [not null]
+    amount decimal(12,2) [not null]
     category expense_category_enum
     description varchar
     incurred_by int [ref: > Employee.employee_id]
