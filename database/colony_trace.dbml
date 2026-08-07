@@ -80,6 +80,11 @@ enum movement_type_enum {
     transfer
 }
 
+enum customer_status_enum {
+    active
+    inactive
+    pending
+}
 
 Table Employee {
     employee_id int [pk]
@@ -316,7 +321,7 @@ Table Customer {
     email varchar
     phone_number varchar [not null]
     location varchar [not null]
-    status varchar [not null]
+    status customer_status_enum
     notes varchar
     created_at timestamp [not null]
     updated_at timestamp [not null]
