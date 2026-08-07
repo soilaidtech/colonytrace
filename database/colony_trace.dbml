@@ -146,9 +146,8 @@ Table Recipe {
     recipe_id int [pk]
     sorting_id int [ref: > WasteSortingEvent.sorting_id]
     recipe_name varchar [not null]
-    feedstock_weight float [not null]
     water_content float [not null]
-    other_ingredients varchar [not null]
+    total_weight varchar [not null]
     prepared_by int [ref: > Employee.employee_id]
     notes varchar
     created_at timestamp [not null]
@@ -162,6 +161,7 @@ Table RecipeIngredient {
     ingredient_weight float [not null]
     notes varchar
     created_at timestamp [not null]
+    updated_at timestamp [not null]
 }
 
 Table BreedingCage {
