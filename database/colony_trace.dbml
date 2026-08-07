@@ -152,7 +152,8 @@ Table LarvaeBatch {
 
 Table FeedingEvent {
     feeding_event_id int [pk]
-    larvae_batch_id int [ref: > LarvaeBatch.larvae_batch_id]
+    larvae_batch_id int [ref: > LarvaeBatch.larvae_batch_id, null]
+    nursery_batch_id int [ref: > NurseryBatch.nursery_batch_id, null]
     recipe_id int [ref: > Recipe.recipe_id]
     feed_date timestamp [not null]
     larvae_weight float [not null]
