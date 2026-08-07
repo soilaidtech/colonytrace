@@ -208,7 +208,7 @@ Table BreedingCage {
 Table BreedingBatch {
     breeding_batch_id int [pk]
     start_date timestamp [not null]
-    harvest_date timestamp
+    retirement_date timestamp
     prepupae_weight float [not null]
     source_type breeder_source_enum
     breeding_cage_id int [ref: > BreedingCage.breeding_cage_id]
@@ -222,6 +222,7 @@ Table BreedingBatch {
 Table EggCollectionEvent {
     egg_collection_id int [pk]
     breeding_cage_id int [ref: > BreedingCage.breeding_cage_id]
+    eggie_placement_date timestamp [not null]
     collection_date timestamp [not null]
     empty_eggie_weight float [not null]
     full_eggie_weight float [not null]
@@ -245,6 +246,7 @@ Table NurseryBatch {
 Table LarvaeBatch {
     larvae_batch_id int [pk]
     nursery_batch_id int [ref: > NurseryBatch.nursery_batch_id, null]
+    container_identifier varchar
     start_date timestamp [not null]
     initial_weight float [not null]
     batch_status status_enum
