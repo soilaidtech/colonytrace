@@ -85,6 +85,7 @@ Table Employee {
     employee_id int [pk]
     first_name varchar [not null]
     role roles
+    job_title varchar [not null]
     email varchar [not null]
     phone_number varchar [not null]
     created_at timestamp [not null]
@@ -217,7 +218,6 @@ Table LarvaeBatch {
     start_date timestamp [not null]
     initial_weight float [not null]
     batch_status status_enum
-    mixed_batch boolean [not null]
     batch_source larvae_source_enum
     created_by int [ref: > Employee.employee_id]
     notes varchar
