@@ -93,6 +93,20 @@ enum trip_status_enum {
     cancelled
 }
 
+enum expense_category_enum {
+    fuel
+    driver_payment
+    collector_payment
+    labour
+    drying_fuel
+    packaging
+    maintenance
+    transport
+    utilities
+    equipment
+    other
+}
+
 Table Employee {
     employee_id int [pk]
     first_name varchar [not null]
@@ -359,6 +373,18 @@ Table InventoryMovement {
     moved_by int [ref: > Employee.employee_id]
     reason_for_movement varchar [not null]
     movement_type movement_type_enum
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
+Table Expense {
+    expense_id int [pk]
+    expense_date timestamp [not null]
+    amount float [not null]
+    category expense_category_enum
+    description varchar
+    incurred_by int [ref: > Employee.employee_id]
     notes varchar
     created_at timestamp [not null]
     updated_at timestamp [not null]
