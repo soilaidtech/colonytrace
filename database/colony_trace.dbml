@@ -242,11 +242,12 @@ Table NurseryBatch {
 
 Table LarvaeBatch {
     larvae_batch_id int [pk]
-    nursery_batch_id int [ref: > NurseryBatch.nursery_batch_id]
+    nursery_batch_id int [ref: > NurseryBatch.nursery_batch_id, null]
     start_date timestamp [not null]
     initial_weight float [not null]
     batch_status status_enum
     batch_source larvae_source_enum
+    external_source varchar
     created_by int [ref: > Employee.employee_id]
     notes varchar
     created_at timestamp [not null]
