@@ -243,11 +243,6 @@ Table FeedingEvent {
 Table HarvestEvent {
     harvest_event_id int [pk]
     harvest_date timestamp [not null]
-    wet_larvae_weight float [not null]
-    prepupae_weight float [not null]
-    frass_weight float [not null]
-    reject_weight float [not null]
-    harvest_reason varchar [not null]
     harvested_by int [ref: > Employee.employee_id]
     notes varchar
     created_at timestamp [not null]
@@ -258,6 +253,11 @@ Table HarvestBatch {
     harvest_batch_id int [pk]
     harvest_event_id int [ref: > HarvestEvent.harvest_event_id]
     larvae_batch_id int [ref: > LarvaeBatch.larvae_batch_id]
+    wet_larvae_weight float [not null]
+    prepupae_weight float [not null]
+    frass_weight float [not null]
+    reject_weight float [not null]
+    harvest_reason varchar [not null]
     contribution_notes varchar
     created_at timestamp [not null]
 }
