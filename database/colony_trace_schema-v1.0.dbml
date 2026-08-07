@@ -1,15 +1,121 @@
 
 enum roles { 
     admin
-    site_manager
+    operations_manager
+    operator
+    production_manager
     director
+}
+
+enum waste_type_enum {
+    food_waste
+    agricultural_waste
+    industrial_waste
+    plastic_waste
+    residential_waste
+    other
+}
+
+enum contamination_level_enum {
+    low
+    medium
+    high
+}
+
+enum cage_status_enum {
+    full
+    empty
+    maintenance
+    active
+}
+
+enum breeder_source_enum {
+    internal
+    external
+}
+
+enum status_enum {
+    active
+    inactive
+    completed
+    pending
+}
+
+enum larvae_source_enum {
+    internal
+    external
+}
+
+enum product_type_enum {
+    dried_larvae
+    frass
+    prepupae
+    wet_larvae
+    other
+}
+
+enum packaging_status_enum {
+    packaged
+    unpackaged
+    in_progress
+}
+
+enum customer_type_enum {
+    chicken_farm
+    fish_farm
+    pig_farm
+    feed_miller
+    crop_farm
+    tree_plantation
+    other
+}
+
+enum payment_status_enum {
+    paid
+    unpaid
+    pending
+}
+
+enum movement_type_enum {
+    addition
+    removal
+    transfer
+}
+
+enum customer_status_enum {
+    active
+    inactive
+    pending
+}
+
+enum trip_status_enum {
+    scheduled
+    in_progress
+    completed
+    cancelled
+}
+
+enum expense_category_enum {
+    fuel
+    driver_payment
+    collector_payment
+    labour
+    drying_fuel
+    packaging
+    maintenance
+    transport
+    utilities
+    equipment
+    other
 }
 
 Table Employee {
     employee_id int [pk]
     first_name varchar [not null]
     role roles
+    job_title varchar [not null]
     email varchar [not null]
+    status status_enum [not null]
     phone_number varchar [not null]
     created_at timestamp [not null]
     updated_at timestamp [not null]
@@ -20,7 +126,9 @@ Table Trip {
     vehicle_id varchar [not null]
     driver_id int [ref: > Employee.employee_id]
     source_location varchar [not null]
-    trip_status varchar [not null]
+    trip_status trip_status_enum
+    dispatch_time timestamp [not null]
+    return_time timestamp [null]
     notes varchar
     created_at timestamp [not null]
     updated_at timestamp [not null]
@@ -60,7 +168,6 @@ Table WasteBatch{
     waste_batch_id int [pk]
     sorting_id int [ref: > WasteSortingEvent.sorting_id]
     batch_weight float [not null]
-    batch_status status_enum
     created_by int [ref: > Employee.employee_id]
     notes varchar
     created_at timestamp [not null]
@@ -69,11 +176,8 @@ Table WasteBatch{
 
 Table Recipe {
     recipe_id int [pk]
-    sorting_id int [ref: > WasteSortingEvent.sorting_id]
     recipe_name varchar [not null]
-    feedstock_weight float [not null]
-    water_content float [not null]
-    other_ingredients varchar [not null]
+    total_weight float [not null]
     prepared_by int [ref: > Employee.employee_id]
     notes varchar
     created_at timestamp [not null]
@@ -82,18 +186,32 @@ Table Recipe {
 
 Table RecipeIngredient {
     ingredient_id int [pk]
-    recipe_id int [ref: > Recipe.recipe_id]
-    sorting_id int [ref: > WasteSortingEvent.sorting_id]
+    recipe_id int [ref: > Recipe.recipe_id, not null]
+    ingredient_name varchar [not null]
     ingredient_weight float [not null]
+    waste_batch_id int [ref: > WasteBatch.waste_batch_id, null]
     notes varchar
     created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
+Table BreedingCage {
+    breeding_cage_id int [pk]
+    cage_identifier varchar [not null]
+    cage_status cage_status_enum
+    created_by int [ref: > Employee.employee_id]
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
 }
 
 Table BreedingBatch {
     breeding_batch_id int [pk]
     start_date timestamp [not null]
-    harvest_date timestamp
+    retirement_date timestamp
     prepupae_weight float [not null]
+    source_type breeder_source_enum
+    breeding_cage_id int [ref: > BreedingCage.breeding_cage_id]
     status status_enum
     created_by int [ref: > Employee.employee_id]
     notes varchar
@@ -103,7 +221,9 @@ Table BreedingBatch {
 
 Table EggCollectionEvent {
     egg_collection_id int [pk]
-    breeding_batch_id int [ref: > BreedingBatch.breeding_batch_id]
+    breeding_cage_id int [ref: > BreedingCage.breeding_cage_id]
+    eggie_placement_date timestamp [not null]
+    collection_date timestamp [not null]
     empty_eggie_weight float [not null]
     full_eggie_weight float [not null]
     collected_by int [ref: > Employee.employee_id]
@@ -125,12 +245,13 @@ Table NurseryBatch {
 
 Table LarvaeBatch {
     larvae_batch_id int [pk]
-    nursery_batch_id int [ref: > NurseryBatch.nursery_batch_id]
+    nursery_batch_id int [ref: > NurseryBatch.nursery_batch_id, null]
+    container_identifier varchar
     start_date timestamp [not null]
     initial_weight float [not null]
     batch_status status_enum
-    mixed_batch boolean [not null]
-    batch_source batch_source_enum
+    batch_source larvae_source_enum
+    external_source varchar
     created_by int [ref: > Employee.employee_id]
     notes varchar
     created_at timestamp [not null]
@@ -139,7 +260,8 @@ Table LarvaeBatch {
 
 Table FeedingEvent {
     feeding_event_id int [pk]
-    larvae_batch_id int [ref: > LarvaeBatch.larvae_batch_id]
+    larvae_batch_id int [ref: > LarvaeBatch.larvae_batch_id, null]
+    nursery_batch_id int [ref: > NurseryBatch.nursery_batch_id, null]
     recipe_id int [ref: > Recipe.recipe_id]
     feed_date timestamp [not null]
     larvae_weight float [not null]
@@ -153,30 +275,31 @@ Table FeedingEvent {
 
 Table HarvestEvent {
     harvest_event_id int [pk]
-    larvae_batch_id int [ref: > LarvaeBatch.larvae_batch_id]
+    larvae_batch_id int [ref: > LarvaeBatch.larvae_batch_id, not null]
+    harvest_batch_id int [ref: > HarvestBatch.harvest_batch_id, null]
     harvest_date timestamp [not null]
-    wet_larvae_weight float [not null]
-    prepupae_weight float [not null]
-    frass_weight float [not null]
-    reject_weight float [not null]
-    harvest_reason varchar [not null]
     harvested_by int [ref: > Employee.employee_id]
+    harvest_reason varchar [not null]
     notes varchar
     created_at timestamp [not null]
     updated_at timestamp [not null]
 }
 
-Table HarvestBatchLink {
-    harvest_batch_link_id int [pk]
-    harvest_event_id int [ref: > HarvestEvent.harvest_event_id]
-    larvae_batch_id int [ref: > LarvaeBatch.larvae_batch_id]
+Table HarvestBatch {
+    harvest_batch_id int [pk]
+    wet_larvae_weight float [not null]
+    prepupae_weight float [not null]
+    frass_weight float [not null]
+    reject_weight float [not null]
     contribution_notes varchar
     created_at timestamp [not null]
+    updated_at timestamp [not null]
 }
 
 Table DryingEvent {
     drying_event_id int [pk]
-    harvest_batch_link int [ref: > HarvestBatchLink.harvest_batch_link_id]
+    harvest_batch_id int [ref: > HarvestBatch.harvest_batch_id, not null]
+    dried_larvae_batch_id int [ref: > DriedLarvaeBatch.dried_larvae_batch_id, not null]
     dryer_id varchar [not null]
     drying_date timestamp [not null]
     wet_input_weight float [not null]
@@ -191,11 +314,21 @@ Table DryingEvent {
     updated_at timestamp [not null]
 }
 
+Table DriedLarvaeBatch {
+    dried_larvae_batch_id int [pk]
+    batch_date timestamp [not null]
+    total_dried_weight float [not null]
+    created_by int [ref: > Employee.employee_id, not null]
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
 Table ProductBatch {
     product_batch_id int [pk]
-    product_id int [ref: > Product.product_id]
-    drying_event_id int [ref: > DryingEvent.drying_event_id]
-    harvest_batch_link_id int [ref: > HarvestBatchLink.harvest_batch_link_id]
+    product_id int [ref: > Product.product_id, not null]
+    dried_larvae_batch_id int [ref: > DriedLarvaeBatch.dried_larvae_batch_id, null]
+    harvest_batch_id int [ref: > HarvestBatch.harvest_batch_id, null]
     production_date timestamp [not null]
     quantity_produced float [not null]
     quantity_available float [not null]
@@ -212,8 +345,8 @@ Table Product {
     product_name varchar [not null]
     product_type product_type_enum
     unit_of_measure varchar [not null]
-    unit_price float [not null]
-    batch_weight float [not null]
+    unit_price decimal(12,2) [not null]
+    package_size float [not null]
     batch_status status_enum
     created_by int [ref: > Employee.employee_id]
     notes varchar
@@ -228,7 +361,7 @@ Table Customer {
     email varchar
     phone_number varchar [not null]
     location varchar [not null]
-    status varchar [not null]
+    status customer_status_enum
     notes varchar
     created_at timestamp [not null]
     updated_at timestamp [not null]
@@ -238,11 +371,10 @@ Table ProductSale {
     sale_id int [pk]
     customer_id int [ref: > Customer.customer_id]
     product_batch_id int [ref: > ProductBatch.product_batch_id]
-    product_id int [ref: > Product.product_id]
     sale_date timestamp [not null]
     quantity_sold float [not null]
-    unit_price float [not null]
-    total_price float [not null]
+    unit_price decimal(12,2) [not null]
+    total_price decimal(12,2) [not null]
     payment_status payment_status_enum
     sold_by int [ref: > Employee.employee_id]
     notes varchar
@@ -258,6 +390,21 @@ Table InventoryMovement {
     moved_by int [ref: > Employee.employee_id]
     reason_for_movement varchar [not null]
     movement_type movement_type_enum
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
+}
+
+Table Expense {
+    expense_id int [pk]
+    expense_date timestamp [not null]
+    amount decimal(12,2) [not null]
+    category expense_category_enum
+    trip_id int [ref: > Trip.trip_id, null]
+    drying_event_id int [ref: > DryingEvent.drying_event_id, null]
+    product_batch_id int [ref: > ProductBatch.product_batch_id, null]
+    description varchar
+    incurred_by int [ref: > Employee.employee_id]
     notes varchar
     created_at timestamp [not null]
     updated_at timestamp [not null]
