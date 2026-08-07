@@ -115,6 +115,7 @@ Table Employee {
     role roles
     job_title varchar [not null]
     email varchar [not null]
+    status status_enum [not null]
     phone_number varchar [not null]
     created_at timestamp [not null]
     updated_at timestamp [not null]
@@ -367,7 +368,6 @@ Table ProductSale {
     sale_id int [pk]
     customer_id int [ref: > Customer.customer_id]
     product_batch_id int [ref: > ProductBatch.product_batch_id]
-    product_id int [ref: > Product.product_id]
     sale_date timestamp [not null]
     quantity_sold float [not null]
     unit_price decimal(12,2) [not null]
