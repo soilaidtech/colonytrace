@@ -83,10 +83,20 @@ Table Recipe {
 Table RecipeIngredient {
     ingredient_id int [pk]
     recipe_id int [ref: > Recipe.recipe_id]
-    sorting_id int [ref: > WasteSortingEvent.sorting_id]
+    sorting_id int [ref: > WasteSortingEvent.sorting_id, null]
     ingredient_weight float [not null]
     notes varchar
     created_at timestamp [not null]
+}
+
+Table BreedingCage {
+    breeding_cage_id int [pk]
+    cage_identifier varchar [not null]
+    cage_status status_enum
+    created_by int [ref: > Employee.employee_id]
+    notes varchar
+    created_at timestamp [not null]
+    updated_at timestamp [not null]
 }
 
 Table BreedingBatch {
@@ -94,6 +104,8 @@ Table BreedingBatch {
     start_date timestamp [not null]
     harvest_date timestamp
     prepupae_weight float [not null]
+    source_type breeder_source_enum
+    breeding_cage_id int [ref: > BreedingCage.breeding_cage_id]
     status status_enum
     created_by int [ref: > Employee.employee_id]
     notes varchar
