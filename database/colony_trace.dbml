@@ -1,7 +1,9 @@
 
 enum roles { 
     admin
-    site_manager
+    operations_manager
+    operator
+    production_manager
     director
 }
 
