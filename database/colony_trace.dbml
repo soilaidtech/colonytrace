@@ -86,6 +86,13 @@ enum customer_status_enum {
     pending
 }
 
+enum trip_status_enum {
+    scheduled
+    in_progress
+    completed
+    cancelled
+}
+
 Table Employee {
     employee_id int [pk]
     first_name varchar [not null]
@@ -102,7 +109,8 @@ Table Trip {
     vehicle_id varchar [not null]
     driver_id int [ref: > Employee.employee_id]
     source_location varchar [not null]
-    trip_status varchar [not null]
+    trip_status trip_status_enum
+    arrival_time timestamp [not null]
     notes varchar
     created_at timestamp [not null]
     updated_at timestamp [not null]
