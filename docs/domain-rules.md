@@ -378,22 +378,21 @@ Harvested material from one or more harvest events is pooled and weighed.
 
 #### Required Information
 
-* Wet larvae weight
-* Prepupae weight
-* Frass weight
-* Reject weight
+- Wet larvae weight
+- Prepupae weight
+- Frass weight
+- Reject weight
 
 #### Business Rules
 
-* A harvest batch must originate from one or more harvest events.
-* A harvest event may belong to only one harvest batch.
-* Wet larvae, prepupae, frass and rejects must be recorded separately.
-* Harvest weights must not be negative.
-* Wet larvae from a harvest batch may be allocated across one or more drying events.
-* Prepupae may be transferred to breeding.
-* Frass may be used to create a product batch.
-* The total wet larvae allocated to drying must not exceed the wet larvae weight recorded for the harvest batch.
-
+- A harvest batch must originate from one or more harvest events.
+- A harvest event may belong to only one harvest batch.
+- Wet larvae, prepupae, frass and rejects must be recorded separately.
+- Harvest weights must not be negative.
+- Wet larvae from a harvest batch may be allocated across one or more drying events.
+- Prepupae may be transferred to breeding.
+- Frass may be used to create a product batch.
+- The total wet larvae allocated to drying must not exceed the wet larvae weight recorded for the harvest batch.
 
 ## Domain: Processing and Inventory
 
@@ -454,25 +453,24 @@ Dried larvae from one or more drying events are pooled and weighed.
 
 #### Required Information
 
-* Batch date
-* Total dried weight
-* Employee responsible
+- Batch date
+- Total dried weight
+- Employee responsible
 
 #### Business Rules
 
-* A dried larvae batch must originate from one or more completed drying events.
-* Multiple drying events may contribute to one dried larvae batch.
-* A drying event may contribute to only one dried larvae batch.
-* Total dried weight must be greater than zero.
-* The total dried weight must not exceed the combined dried output weight of its drying events.
-* A dried larvae batch may be used to create a product batch.
-
+- A dried larvae batch must originate from one or more completed drying events.
+- Multiple drying events may contribute to one dried larvae batch.
+- A drying event may contribute to only one dried larvae batch.
+- Total dried weight must be greater than zero.
+- The total dried weight must not exceed the combined dried output weight of its drying events.
+- A dried larvae batch may be used to create a product batch.
 
 ### Entity: Product Batch
 
 #### Definition
 
-A quantity of finished product created from one or more completed drying events and prepared for storage or sale.
+A batch of a defined product produced and made available for inventory or sale.
 
 #### Created By
 
@@ -480,7 +478,7 @@ Production Manager or Operations Manager.
 
 #### Created When
 
-Dried larvae are weighed, grouped, and recorded as finished product.
+A production output is prepared as a defined product.
 
 #### Ends When
 
@@ -489,23 +487,22 @@ The full batch quantity has been sold, used internally, discarded, or otherwise 
 #### Required Information
 
 - Product
-- Batch number
 - Production date
-- Source drying event(s)
-- Total batch weight
-- Storage location
-- Status
+- Source batch
+- Quantity produced
+- Employee responsible
+- Packaging status
 
 #### Business Rules
 
-- Every product batch must reference one product.
-- Every product batch must originate from one or more completed production events appropriate for its product type.
-- Batch weight must be greater than zero.
-- Product from different types must not be combined into one batch.
-- Available quantity must not fall below zero.
-- All sales, losses, samples, and internal use must reduce the recorded inventory.
-- A product batch cannot be sold before it is completed and approved.
-- Completed product batches cannot be deleted; corrections must be auditable.
+- Every product batch must reference a defined product.
+- A product batch must originate from the appropriate production source for its product type.
+- Dried larvae product batches must originate from a dried larvae batch.
+- Frass product batches must originate from a harvest batch.
+- Quantity produced must be greater than zero.
+- Quantity available must not exceed quantity produced.
+- Inventory movements and sales must reference the appropriate product batch.
+- A product batch must remain traceable to its production source.
 
 ### Entity: Inventory Movement
 
