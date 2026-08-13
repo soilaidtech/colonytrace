@@ -282,7 +282,7 @@ The neonates are transferred to a production larvae batch or the nursery batch i
 
 #### Definition
 
-A group of BSFL larvae reared in a specific container from nursery until harvest
+A group of developing larvae maintained in a production basin or container.
 
 #### Created By
 
@@ -290,18 +290,19 @@ Production Manager or Operations Manager
 
 #### Created When
 
-Nursery larvae or externally sourced larvae are placed into a production basin.
+Larvae are transferred into a production basin from a nursery batch or received from an external source.
 
 #### Ends When
 
-A batch is fully harvested or rejected
+The larvae batch is fully harvested or rejected.
 
 #### Required Information
 
-- Nursery batch
-- Transfer date
+- Start date
+- Batch source
 - Initial weight
-- Status
+- Basin/container identifier
+- Employee responsible
 
 #### Business Rules
 
@@ -315,6 +316,7 @@ A batch is fully harvested or rejected
 - Feeding is only permitted while the batch is active.
 - A fully harvested or rejected batch cannot receive additional feeding.
 - All basin transfers, harvests, and rejections must be recorded.
+- Internally produced larvae batches must reference their source nursery batch.
 
 ### Entity: Feeding Event
 
