@@ -362,6 +362,39 @@ One or more larvae batches are harvested
 - Harvest output weights are recorded at the harvest batch level after pooling and weighing.
 - A completed harvest event cannot be deleted; corrections must be recorded through an audit process.
 
+### Entity: Harvest Batch
+
+#### Definition
+
+A pooled and weighed batch of harvested material produced from one or more harvest events.
+
+#### Created By
+
+Operations Manager or Production Manager
+
+#### Created When
+
+Harvested material from one or more harvest events is pooled and weighed.
+
+#### Required Information
+
+* Wet larvae weight
+* Prepupae weight
+* Frass weight
+* Reject weight
+
+#### Business Rules
+
+* A harvest batch must originate from one or more harvest events.
+* A harvest event may belong to only one harvest batch.
+* Wet larvae, prepupae, frass and rejects must be recorded separately.
+* Harvest weights must not be negative.
+* Wet larvae from a harvest batch may be allocated across one or more drying events.
+* Prepupae may be transferred to breeding.
+* Frass may be used to create a product batch.
+* The total wet larvae allocated to drying must not exceed the wet larvae weight recorded for the harvest batch.
+
+
 ## Domain: Processing and Inventory
 
 ### Entity: Drying Event
