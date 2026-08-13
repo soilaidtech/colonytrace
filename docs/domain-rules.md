@@ -401,7 +401,7 @@ Harvested material from one or more harvest events is pooled and weighed.
 
 #### Definition
 
-A record of drying a portion of a harvested larvae batch in a charcoal oven.
+A record of wet larvae from a harvest batch being dried in a single oven.
 
 #### Created By
 
@@ -409,32 +409,34 @@ Operations Manager or Production Manager
 
 #### Created When
 
-The drying process is completed and the dried larvae are removed from the oven.
+Wet larvae from a harvest batch are loaded into an oven for drying.
 
 #### Ends When
 
-A larvae batch has been dried
+The drying cycle is completed and the dried larvae are weighed.
 
 #### Required Information
 
 - Harvest batch
-- Oven
-- Drying start date and time
-- Drying completion date and time
-- Wet larvae weight
-- Dried larvae weight
-- Charcoal used (optional)
+- Dryer/oven
+- Drying date
+- Wet input weight
+- Dried output weight
+- Start time
+- Stop time
+- Moisture content
 - Employee responsible
 
 #### Business Rules
 
-- Every drying event must reference one harvest batch.
-- Every drying event must be assigned to one oven.
-- A harvest batch may be dried through multiple drying events.
-- Wet larvae weight must be greater than zero.
-- Dried larvae weight must not exceed the wet larvae weight.
-- Drying output must be recorded before packing.
-- Completed drying events cannot be modified without an authorised correction.
+- Every drying event must originate from one harvest batch.
+- A harvest batch may be processed through multiple drying events.
+- Each drying event must use one oven.
+- Wet input and dried output weights must be greater than zero.
+- Dried output weight must not exceed wet input weight.
+- The total wet input across drying events must not exceed the wet larvae available in the harvest batch.
+- Multiple drying events may contribute to one dried larvae batch.
+- A drying event may contribute to only one dried larvae batch.
 
 ### Entity: Product Batch
 
