@@ -103,7 +103,7 @@ Waste from Waste Receiving Event has been physically sorted, contaminants remove
 
 #### Definition
 
-A feed mixture prepared from one or more sorted waste ingredients for use in feeding larvae.
+A record of ingredients mixed together to create feed for a nursery or larvae batch.
 
 #### Created By
 
@@ -111,7 +111,13 @@ Production Manager or Production Operator.
 
 #### Created When
 
-A new feed mixture is prepared for larvae feeding.
+Ingredients are mixed to prepare feed.
+
+#### Required Fields
+- Recipe name
+- Total weight
+- Ingredients
+- Employee responsible
 
 #### Ends When
 
@@ -119,11 +125,13 @@ The entire recipe has been consumed or discarded.
 
 #### Business Rules
 
-- A recipe may contain one or more sorted waste ingredients.
-- Water added during mixing must be recorded.
-- The total ingredient weight must equal the recipe weight.
-- A recipe cannot be modified after it has been used in a feeding event.
-- A recipe may be used in one or more feeding events until fully consumed.
+- Every recipe must contain one or more recipe ingredients.
+- A recipe may contain waste-derived and non-waste ingredients.
+- The weight of each ingredient must be recorded.
+- The total recipe weight must be greater than zero.
+- A recipe may be used in one or more feeding events.
+- Where an ingredient originates from a waste batch, the source waste batch must be recorded.
+- The recipe must remain traceable to its recorded ingredients.
 
 ### Entity: Recipe Ingredient
 
