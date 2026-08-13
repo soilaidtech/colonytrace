@@ -632,6 +632,37 @@ The customer is marked as inactive.
 - Customer information may be updated without affecting historical sales records.
 - Customer records are never permanently deleted; they are marked as inactive when no longer active.
 
+### Entity: Expense
+
+#### Definition
+
+A record of a cost incurred during production or other site operations.
+
+#### Created By
+
+Operations Manager or Production Manager
+
+#### Created When
+
+Money is spent or a financial obligation is incurred.
+
+#### Required Information
+
+* Expense date
+* Amount
+* Expense category
+* Employee responsible
+
+#### Business Rules
+
+* Every expense must be assigned to an expense category.
+* Expense amount must be greater than zero.
+* An expense may be linked to a trip, drying event, or product batch where the cost is directly attributable to that activity.
+* Expenses that cannot be directly attributed to a production activity may be recorded as general operational expenses.
+* An expense must not be allocated to an operational activity unless the cost was actually incurred for that activity.
+* Expense records must be retained for production cost and profitability calculations.
+
+
 ### Entity: Sale
 
 #### Definition
