@@ -438,6 +438,36 @@ The drying cycle is completed and the dried larvae are weighed.
 - Multiple drying events may contribute to one dried larvae batch.
 - A drying event may contribute to only one dried larvae batch.
 
+### Entity: Dried Larvae Batch
+
+#### Definition
+
+A pooled batch of dried larvae produced from one or more completed drying events.
+
+#### Created By
+
+Operations Manager or Production Manager
+
+#### Created When
+
+Dried larvae from one or more drying events are pooled and weighed.
+
+#### Required Information
+
+* Batch date
+* Total dried weight
+* Employee responsible
+
+#### Business Rules
+
+* A dried larvae batch must originate from one or more completed drying events.
+* Multiple drying events may contribute to one dried larvae batch.
+* A drying event may contribute to only one dried larvae batch.
+* Total dried weight must be greater than zero.
+* The total dried weight must not exceed the combined dried output weight of its drying events.
+* A dried larvae batch may be used to create a product batch.
+
+
 ### Entity: Product Batch
 
 #### Definition
