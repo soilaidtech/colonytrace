@@ -114,6 +114,7 @@ Production Manager or Production Operator.
 Ingredients are mixed to prepare feed.
 
 #### Required Fields
+
 - Recipe name
 - Total weight
 - Ingredients
@@ -137,7 +138,7 @@ The entire recipe has been consumed or discarded.
 
 #### Definition
 
-A record of a mtaerial and quantity added to a recipe
+A single ingredient used as a component of a recipe.
 
 #### Created By
 
@@ -147,6 +148,12 @@ Operations Manager or Production Manager
 
 An ingredient is added during recipe preparation
 
+#### Required Information
+
+- Ingredient name
+- Ingredient weight
+- Recipe
+
 #### Ends When
 
 The recipe is completed, discarded or fully used
@@ -154,11 +161,13 @@ The recipe is completed, discarded or fully used
 #### Business Rules
 
 - Every recipe ingredient must belong to one recipe.
-- An ingredient may come from sorted waste, purchased material, water, or another approved material.
+- An ingredient may be waste-derived or non-waste, such as water or kienyeji mash.
 - The ingredient type, quantity, and unit of measure must be recorded.
-- The quantity must be greater than zero.
-- Ingredients sourced from sorted waste should reference the related sorting record.
+- Ingredient weight must be greater than zero.
+- If an ingredient originates from processed waste, its source waste batch must be recorded.
 - Ingredients taken from inventory cannot exceed the available quantity.
+- Non-waste ingredients do not require a waste batch reference.
+- Multiple ingredients may be added to the same recipe.
 
 ## Domain: Biological Production
 
