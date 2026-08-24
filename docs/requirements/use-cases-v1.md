@@ -730,3 +730,73 @@ A larvae batch or nursery batch requires feeding or a feed top-up.
 1. The system stores the feeding event locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
+
+## UC-012 — Record Harvest Event
+
+### Primary Actor
+Production Manager / Operator
+
+### Goal
+Record the harvesting of a larvae batch from its production basin or container.
+
+### Preconditions
+- The user is authenticated.
+- The user has permission to record harvest events.
+- The larvae batch exists.
+- The larvae batch is active.
+
+### Trigger
+A larvae batch is ready to be harvested.
+
+### Basic Flow
+1. The user selects **Record Harvest Event**.
+2. The system displays active larvae batches.
+3. The user selects the larvae batch being harvested.
+4. The system displays the selected batch and its basin/container identifier.
+5. The user records the harvest date.
+6. The user records the harvest reason.
+7. The user enters any relevant notes.
+8. The user submits the record.
+9. The system validates the entered information.
+10. The system creates the harvest event and records the employee responsible.
+11. The system confirms that the harvest event was successfully recorded.
+12. The harvest event becomes available for inclusion in a harvest batch.
+
+### Postconditions
+- A harvest event is recorded for the selected larvae batch.
+- The harvest event remains traceable to the larvae batch and its production basin/container.
+- The harvest event is available for inclusion in a harvest batch.
+- The larvae batch's harvest history is updated.
+
+### Alternate Flows
+
+**A1 — Multiple larvae batches are harvested**
+1. The user selects each larvae batch being harvested.
+2. The system creates a separate harvest event for each larvae batch.
+3. The individual harvest events may subsequently be pooled into the same harvest batch.
+
+**A2 — Larvae batch is not active**
+1. The system identifies that the selected larvae batch is not active.
+2. The system prevents the harvest event from being recorded.
+3. The user selects an active larvae batch or exits the process.
+
+**A3 — Larvae batch is partially harvested**
+1. The user records the harvest event.
+2. The larvae batch remains active because larvae remain in the production basin.
+3. Additional harvest events may be recorded against the same larvae batch later.
+
+**A4 — Larvae batch is fully harvested**
+1. The user records the harvest event.
+2. The user indicates that the larvae batch has been fully harvested.
+3. The system marks the larvae batch as completed.
+4. No further feeding or harvest events may be recorded against the completed larvae batch.
+
+**A5 — Required information is missing**
+1. The system identifies the missing required information.
+2. The system prevents submission.
+3. The user provides the required information and submits the record again.
+
+**A6 — Device is offline**
+1. The system stores the harvest event locally.
+2. The record is marked as pending synchronization.
+3. The system synchronizes the record when connectivity becomes available.
