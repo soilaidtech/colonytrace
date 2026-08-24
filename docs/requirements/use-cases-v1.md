@@ -660,3 +660,73 @@ Larvae are placed into a production basin for growth and feeding.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
 
+## UC-011 — Record Feeding Event
+
+### Primary Actor
+Production Manager / Operator
+
+### Goal
+Record feed provided to an active larvae batch or nursery batch.
+
+### Preconditions
+- The user is authenticated.
+- The user has permission to record feeding events.
+- An active larvae batch or nursery batch exists.
+- A prepared recipe exists and is available for feeding.
+
+### Trigger
+A larvae batch or nursery batch requires feeding or a feed top-up.
+
+### Basic Flow
+1. The user selects **Record Feeding Event**.
+2. The user selects whether the feed is being provided to a larvae batch or nursery batch.
+3. The user selects the active batch being fed.
+4. The user selects the recipe being used.
+5. The user records the current larvae weight where applicable.
+6. The user records the weight of feed provided.
+7. The system calculates the feeding ratio.
+8. The user records the feeding date.
+9. The user enters any relevant notes.
+10. The user submits the record.
+11. The system validates the entered information.
+12. The system records the feeding event and the employee responsible.
+13. The system confirms that the feeding event was successfully recorded.
+
+### Postconditions
+- A feeding event is recorded.
+- The feeding event is associated with one larvae batch or one nursery batch.
+- The feed provided is traceable to the recipe used.
+- The quantity of feed provided and feeding ratio are recorded.
+- The batch's feeding history is updated.
+
+### Alternate Flows
+
+**A1 — Nursery batch is being fed**
+1. The user selects a nursery batch instead of a larvae batch.
+2. The system associates the feeding event with the selected nursery batch.
+3. No larvae batch is associated with the feeding event.
+
+**A2 — Selected batch is not active**
+1. The system identifies that the selected batch is not active.
+2. The system prevents the feeding event from being recorded.
+3. The user selects an active batch or exits the process.
+
+**A3 — Recipe is unavailable**
+1. The system identifies that the selected recipe is unavailable for feeding.
+2. The system prevents submission.
+3. The user selects another available recipe or records the required recipe before continuing.
+
+**A4 — Feed weight is invalid**
+1. The system identifies that the feed weight is zero, negative or otherwise invalid.
+2. The system prevents submission.
+3. The user corrects the feed weight.
+
+**A5 — Required information is missing**
+1. The system identifies the missing required information.
+2. The system prevents submission.
+3. The user provides the required information and submits the record again.
+
+**A6 — Device is offline**
+1. The system stores the feeding event locally.
+2. The record is marked as pending synchronization.
+3. The system synchronizes the record when connectivity becomes available.
