@@ -1175,3 +1175,83 @@ Dried larvae from one or more completed drying events are pooled after drying.
 1. The system stores the dried larvae batch and its drying-event associations locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the records when connectivity becomes available.
+
+## UC-016 — Create Product Batch
+
+### Primary Actor
+Production Manager
+
+### Goal
+Create a traceable batch of a defined product from a completed production output.
+
+### Preconditions
+- The user is authenticated.
+- The user has permission to create product batches.
+- The product exists in the system.
+- The appropriate source batch exists and is available for product creation.
+- For dried larvae products, a dried larvae batch exists.
+- For frass products, a harvest batch exists.
+
+### Trigger
+A production output is ready to be recorded as a defined product.
+
+### Basic Flow
+1. The user selects **Create Product Batch**.
+2. The user selects the product being produced.
+3. The system determines the required source type based on the selected product.
+4. The user selects the appropriate source batch.
+5. The user records the production date.
+6. The user records the quantity produced.
+7. The user records the packaging status.
+8. The user records the product batch expiry date where applicable.
+9. The user enters any relevant notes.
+10. The user submits the record.
+11. The system validates the entered information.
+12. The system creates the product batch.
+13. The system records the quantity available.
+14. The system records the employee responsible.
+15. The system confirms that the product batch was successfully created.
+
+### Postconditions
+- A product batch is created.
+- The product batch is associated with its defined product.
+- The product batch remains traceable to its production source.
+- The quantity produced and quantity available are recorded.
+- The product batch is available for inventory movements and sales.
+
+### Alternate Flows
+
+**A1 — Dried larvae product is being created**
+1. The user selects a dried larvae product.
+2. The system requires the user to select a dried larvae batch.
+3. The product batch is linked to the selected dried larvae batch.
+
+**A2 — Frass product is being created**
+1. The user selects a frass product.
+2. The system requires the user to select a harvest batch.
+3. The product batch is linked to the selected harvest batch.
+
+**A3 — Quantity produced exceeds available source quantity**
+1. The system identifies that the entered quantity exceeds the quantity available from the selected source batch.
+2. The system prevents submission.
+3. The user verifies the source batch or corrects the quantity produced.
+
+**A4 — Incorrect source type is selected**
+1. The system identifies that the selected source is incompatible with the product type.
+2. The system prevents submission.
+3. The user selects the appropriate source batch.
+
+**A5 — Product is not yet packaged**
+1. The user records the packaging status as **Unpackaged** or **In Progress**.
+2. The system creates the product batch with the selected packaging status.
+3. The packaging status may be updated when packaging is completed.
+
+**A6 — Required information is missing**
+1. The system identifies the missing required information.
+2. The system prevents submission.
+3. The user provides the required information and submits the record again.
+
+**A7 — Device is offline**
+1. The system stores the product batch locally.
+2. The record is marked as pending synchronization.
+3. The system synchronizes the record when connectivity becomes available.
