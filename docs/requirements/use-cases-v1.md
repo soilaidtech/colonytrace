@@ -1400,3 +1400,69 @@ A customer purchases a product from SoilAid Technologies.
 3. The record is marked as pending synchronization.
 4. The system synchronizes the sale when connectivity becomes available.
 5. If synchronization identifies an inventory conflict, the system flags the sale for review.
+
+## UC-019 — Record Expense
+
+### Primary Actor
+Operations Manager
+
+### Goal
+Record a cost incurred during production or other site operations for cost tracking and reporting.
+
+### Preconditions
+- The user is authenticated.
+- The user has permission to record expenses.
+- The expense has been incurred.
+
+### Trigger
+Money is spent or a financial obligation is incurred during production or site operations.
+
+### Basic Flow
+1. The user selects **Record Expense**.
+2. The user records the expense date.
+3. The user selects the expense category.
+4. The user enters the amount.
+5. The user enters a description of the expense.
+6. Where applicable, the user associates the expense with the relevant operational activity.
+7. The user enters any relevant notes.
+8. The user submits the record.
+9. The system validates the entered information.
+10. The system records the expense and the employee responsible.
+11. The system confirms that the expense was successfully recorded.
+
+### Postconditions
+- An expense is recorded.
+- The expense is assigned to an expense category.
+- Where applicable, the expense is traceable to the operational activity that incurred the cost.
+- The expense is available for cost and profitability reporting.
+
+### Alternate Flows
+
+**A1 — Expense is directly attributable to an operational activity**
+1. The user selects the relevant operational activity.
+2. The system associates the expense with that activity.
+3. The expense becomes available for calculating the cost of that activity.
+
+**A2 — Expense is a general operational expense**
+1. The user records the expense without associating it with a specific production activity.
+2. The system records it as a general operational expense.
+
+**A3 — Expense category is Other**
+1. The user selects **Other** as the expense category.
+2. The user provides a description identifying the nature of the expense.
+3. The system records the expense.
+
+**A4 — Invalid expense amount**
+1. The system identifies that the amount is zero, negative or otherwise invalid.
+2. The system prevents submission.
+3. The user corrects the amount.
+
+**A5 — Required information is missing**
+1. The system identifies the missing required information.
+2. The system prevents submission.
+3. The user provides the required information and submits the record again.
+
+**A6 — Device is offline**
+1. The system stores the expense locally.
+2. The record is marked as pending synchronization.
+3. The system synchronizes the record when connectivity becomes available.
