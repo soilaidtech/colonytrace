@@ -478,3 +478,62 @@ A batch of prepupae is introduced into a breeding cage.
 1. The system stores the breeding batch locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
+
+## UC-008 — Record Egg Collection
+
+### Primary Actor
+Production Manager / Operator
+
+### Goal
+Record BSFL eggs collected from a breeding cage using an eggie and make the collected eggs available for nursery production.
+
+### Preconditions
+- The user is authenticated.
+- The user has permission to record egg collection events.
+- The breeding cage exists and contains active breeding batches.
+- An eggie has been placed in the breeding cage.
+
+### Trigger
+A full eggie is removed from a breeding cage for collection and transfer to the nursery.
+
+### Basic Flow
+1. The user selects **Record Egg Collection**.
+2. The user selects the breeding cage.
+3. The user records the eggie placement date.
+4. The user records the eggie collection date.
+5. The user records the empty eggie weight.
+6. The user records the full eggie weight.
+7. The system calculates the egg weight as the difference between the full and empty eggie weights.
+8. The user enters any relevant notes.
+9. The user submits the record.
+10. The system validates the entered information.
+11. The system records the egg collection event and the employee responsible.
+12. The system confirms that the egg collection event was successfully recorded.
+
+### Postconditions
+- An egg collection event is recorded.
+- The collected eggs are traceable to the breeding cage.
+- The calculated egg weight is available for nursery tracking.
+- The egg collection event is available for creation of a nursery batch.
+
+### Alternate Flows
+
+**A1 — Full eggie weight is not greater than empty eggie weight**
+1. The system identifies the invalid weight values.
+2. The system prevents submission.
+3. The user verifies and corrects the recorded weights.
+
+**A2 — Eggie collection date is earlier than placement date**
+1. The system identifies the invalid date sequence.
+2. The system prevents submission.
+3. The user corrects the dates.
+
+**A3 — Required information is missing**
+1. The system identifies the missing required information.
+2. The system prevents submission.
+3. The user provides the required information and submits the record again.
+
+**A4 — Device is offline**
+1. The system stores the egg collection event locally.
+2. The record is marked as pending synchronization.
+3. The system synchronizes the record when connectivity becomes available.
