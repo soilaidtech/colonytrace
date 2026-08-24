@@ -537,3 +537,57 @@ A full eggie is removed from a breeding cage for collection and transfer to the 
 1. The system stores the egg collection event locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
+
+## UC-009 — Create Nursery Batch
+
+### Primary Actor
+Production Manager
+
+### Goal
+Create a nursery batch from collected BSFL eggs and track the batch through hatching and early larval development.
+
+### Preconditions
+- The user is authenticated.
+- The user has permission to create nursery batches.
+- A valid egg collection event exists.
+- The collected eggs are available for transfer to the nursery.
+
+### Trigger
+Collected eggs are placed in the nursery for hatching.
+
+### Basic Flow
+1. The user selects **Create Nursery Batch**.
+2. The user selects the associated egg collection event.
+3. The user records the nursery batch start date.
+4. The user enters any relevant notes.
+5. The user submits the record.
+6. The system validates the entered information.
+7. The system creates the nursery batch with an **Active** status.
+8. The system records the employee responsible.
+9. The system confirms that the nursery batch was successfully created.
+
+### Postconditions
+- A nursery batch is created.
+- The nursery batch is traceable to its egg collection event.
+- The nursery batch is available for feeding events.
+- The nursery batch is available for creation of one or more larvae batches when the neonates are ready for transfer.
+
+### Alternate Flows
+
+**A1 — Egg collection event is unavailable or invalid**
+1. The system prevents creation of the nursery batch.
+2. The user selects a valid egg collection event or exits the process.
+
+**A2 — Nursery batch is rejected**
+1. The user updates the nursery batch status to **Inactive** or the appropriate rejected status.
+2. The batch cannot be used to create larvae batches.
+
+**A3 — Required information is missing**
+1. The system identifies the missing required information.
+2. The system prevents submission.
+3. The user provides the required information and submits the record again.
+
+**A4 — Device is offline**
+1. The system stores the nursery batch locally.
+2. The record is marked as pending synchronization.
+3. The system synchronizes the record when connectivity becomes available.
