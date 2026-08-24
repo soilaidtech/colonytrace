@@ -591,3 +591,72 @@ Collected eggs are placed in the nursery for hatching.
 1. The system stores the nursery batch locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
+
+## UC-010 — Create Larvae Batch
+
+### Primary Actor
+Production Manager
+
+### Goal
+Create a larvae batch when larvae are transferred from a nursery batch or received from an external source and placed into a production basin.
+
+### Preconditions
+- The user is authenticated.
+- The user has permission to create larvae batches.
+- A production basin or container is available.
+- For internally produced larvae, an active nursery batch exists.
+- For externally sourced larvae, the larvae have been received at the production facility.
+
+### Trigger
+Larvae are placed into a production basin for growth and feeding.
+
+### Basic Flow
+1. The user selects **Create Larvae Batch**.
+2. The user selects the batch source as **Internal** or **External**.
+3. For an internal batch, the user selects the source nursery batch.
+4. The user selects or enters the production basin/container identifier.
+5. The user records the initial larvae weight.
+6. The user records the batch start date.
+7. The user enters any relevant notes.
+8. The user submits the record.
+9. The system validates the entered information.
+10. The system creates the larvae batch with an **Active** status.
+11. The system records the employee responsible.
+12. The system confirms that the larvae batch was successfully created.
+
+### Postconditions
+- A larvae batch is created.
+- The larvae batch is associated with its production basin/container.
+- An internally produced larvae batch remains traceable to its nursery batch.
+- An externally sourced larvae batch is identified as externally sourced.
+- The larvae batch is available for feeding and subsequent harvesting.
+
+### Alternate Flows
+
+**A1 — Larvae originate from an external source**
+1. The user selects **External** as the batch source.
+2. A nursery batch is not required.
+3. The user records the initial larvae weight and production basin/container.
+4. The system creates the larvae batch as externally sourced.
+
+**A2 — One nursery batch is divided across multiple basins**
+1. The user selects the same nursery batch as the source.
+2. The user creates a separate larvae batch for each production basin.
+3. Each larvae batch receives its own identifier and container identifier.
+4. All created larvae batches remain traceable to the same nursery batch.
+
+**A3 — Production basin/container is unavailable**
+1. The system identifies that the selected container is unavailable for a new larvae batch.
+2. The system prevents the batch from being assigned to that container.
+3. The user selects an available container.
+
+**A4 — Required information is missing**
+1. The system identifies the missing required information.
+2. The system prevents submission.
+3. The user provides the required information and submits the record again.
+
+**A5 — Device is offline**
+1. The system stores the larvae batch locally.
+2. The record is marked as pending synchronization.
+3. The system synchronizes the record when connectivity becomes available.
+
