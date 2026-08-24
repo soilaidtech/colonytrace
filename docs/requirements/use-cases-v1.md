@@ -134,3 +134,57 @@ The user is instructed to contact an authorised administrator.
 The system attempts to authenticate using locally stored authorised session credentials.
 If a valid offline session exists, access is granted with offline functionality.
 If no valid offline session exists, the system informs the user that internet access is required for authentication.
+
+## UC-002 — Record Waste Collection Trip
+
+### Primary Actor
+Operations Manager / Operator
+
+### Goal
+Record a vehicle trip undertaken to collect waste for the production facility.
+
+### Preconditions
+- The user is authenticated.
+- The user has permission to record waste collection trips.
+- The vehicle and driver are known.
+
+### Trigger
+A vehicle is dispatched to collect waste.
+
+### Basic Flow
+1. The user selects **Record Waste Collection Trip**.
+2. The user enters the vehicle, driver and waste collection location.
+3. The user records the dispatch time.
+4. The system creates the trip with a status of **In Progress**.
+5. When the vehicle returns, the user opens the active trip.
+6. The user records the return time.
+7. The user confirms completion of the trip.
+8. The system updates the trip status to **Completed**.
+
+### Postconditions
+- The waste collection trip is recorded.
+- The trip contains its vehicle, driver, collection location, dispatch time and return time.
+- A completed trip is available for use when recording waste received.
+- Expenses incurred during the trip may be linked to the trip.
+
+### Alternate Flows
+
+**A1 — Trip is cancelled**
+1. The user selects the active or scheduled trip.
+2. The user marks the trip as cancelled.
+3. The system records the trip status as **Cancelled**.
+
+**A2 — Vehicle has not returned**
+1. The trip remains **In Progress**.
+2. The return time remains empty.
+3. The trip may be completed when the vehicle returns.
+
+**A3 — Required information is missing**
+1. The system identifies the missing required information.
+2. The system prevents submission.
+3. The user provides the required information and submits the record again.
+
+**A4 — Device is offline**
+1. The system stores the trip record locally.
+2. The record is marked as pending synchronization.
+3. The system synchronizes the record when connectivity becomes available.
