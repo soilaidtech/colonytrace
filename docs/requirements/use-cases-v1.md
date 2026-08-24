@@ -1255,3 +1255,71 @@ A production output is ready to be recorded as a defined product.
 1. The system stores the product batch locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
+
+## UC-017 — Record Inventory Movement
+
+### Primary Actor
+Operations Manager
+
+### Goal
+Record any movement that increases, decreases, or transfers finished product inventory.
+
+### Preconditions
+- The user is authenticated.
+- The user has permission to record inventory movements.
+- The product batch exists.
+- The quantity being moved is available where required.
+
+### Trigger
+A product batch is added to inventory, removed from inventory, or transferred.
+
+### Basic Flow
+1. The user selects **Record Inventory Movement**.
+2. The user selects the product batch.
+3. The user selects the movement type.
+4. The user records the quantity moved.
+5. The user records the movement date.
+6. The user enters the reason for the movement.
+7. The user enters any relevant notes.
+8. The user submits the record.
+9. The system validates the entered information.
+10. The system records the inventory movement and the employee responsible.
+11. The system updates the available quantity of the product batch.
+12. The system confirms that the inventory movement was successfully recorded.
+
+### Postconditions
+- An inventory movement is recorded.
+- The movement is traceable to the relevant product batch.
+- The available quantity of the product batch is updated.
+- The inventory history reflects the movement.
+
+### Alternate Flows
+
+**A1 — Inventory is added**
+1. The user selects **Addition** as the movement type.
+2. The system increases the available quantity of the selected product batch.
+
+**A2 — Inventory is removed**
+1. The user selects **Removal** as the movement type.
+2. The system verifies that sufficient quantity is available.
+3. The system decreases the available quantity of the selected product batch.
+
+**A3 — Inventory is transferred**
+1. The user selects **Transfer** as the movement type.
+2. The user records the quantity being transferred.
+3. The system records the transfer without changing the total quantity of the product batch.
+
+**A4 — Quantity exceeds available inventory**
+1. The system identifies that the requested removal quantity exceeds the available inventory.
+2. The system prevents submission.
+3. The user corrects the quantity.
+
+**A5 — Required information is missing**
+1. The system identifies the missing required information.
+2. The system prevents submission.
+3. The user provides the required information and submits the record again.
+
+**A6 — Device is offline**
+1. The system stores the inventory movement locally.
+2. The record is marked as pending synchronization.
+3. The system synchronizes the record when connectivity becomes available.
