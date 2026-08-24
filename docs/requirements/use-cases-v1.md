@@ -79,3 +79,58 @@ ColonyTrace shall enable users to:
 | UC-018 | Record Customer Sale         | Operations Manager                      |
 | UC-019 | Record Expense               | Operations Manager                      |
 | UC-020 | View Production Dashboard    | Director / Managers                     |
+
+8. USE-CASES
+
+
+### UC-001 - User Login
+
+All users
+
+#### Goal
+
+Allow an authorised ColonyTrace user to access the system.
+
+#### Preconditions
+
+The user has an active ColonyTrace account.
+The application is installed on the device.
+
+#### Trigger
+
+The user opens ColonyTrace and attempts to access the system.
+
+#### Basic Flow
+
+The system displays the login screen.
+The user enters their login credentials.
+The user submits the login request.
+The system validates the credentials.
+The system authenticates the user.
+The system loads the interface and permissions associated with the user's role.
+The user is granted access to ColonyTrace.
+
+#### Postconditions
+
+The user is authenticated.
+The user has access only to features permitted by their assigned role.
+
+#### Alternate Flows
+
+**A1 — Invalid credentials**
+
+The system rejects the login attempt.
+The system displays an invalid credentials message.
+The user may retry.
+
+**A2 — Inactive account**
+
+The system identifies the account as inactive.
+Access is denied.
+The user is instructed to contact an authorised administrator.
+
+**A3 — Device is offline**
+
+The system attempts to authenticate using locally stored authorised session credentials.
+If a valid offline session exists, access is granted with offline functionality.
+If no valid offline session exists, the system informs the user that internet access is required for authentication.
