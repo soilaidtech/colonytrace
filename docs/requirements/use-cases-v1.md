@@ -188,3 +188,58 @@ A vehicle is dispatched to collect waste.
 1. The system stores the trip record locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
+
+## UC-003 — Record Waste Receiving Event
+
+### Primary Actor
+Operations Manager / Operator
+
+### Goal
+Record waste received at the production facility from a waste collection trip.
+
+### Preconditions
+- The user is authenticated.
+- The user has permission to record waste receiving events.
+- The associated waste collection trip exists.
+- The waste has arrived at the production facility.
+
+### Trigger
+Collected waste arrives at the production facility.
+
+### Basic Flow
+1. The user selects **Record Waste Receiving Event**.
+2. The user selects the associated waste collection trip.
+3. The user enters the waste source.
+4. The user selects the waste type.
+5. The user records the gross weight of the received waste.
+6. The user records the contamination level.
+7. The user indicates whether the waste is accepted.
+8. The user enters any relevant notes.
+9. The user submits the record.
+10. The system validates the entered information.
+11. The system records the waste receiving event and the employee responsible.
+12. The system confirms that the waste receiving event was successfully recorded.
+
+### Postconditions
+- A waste receiving event is recorded.
+- The received waste is traceable to its collection trip.
+- Accepted waste is available for subsequent waste sorting.
+- Rejected waste remains recorded for traceability but cannot proceed to waste sorting.
+
+### Alternate Flows
+
+**A1 — Waste is rejected**
+1. The user marks the waste as not accepted.
+2. The user records the reason for rejection.
+3. The system records the waste receiving event as rejected.
+4. The rejected waste cannot proceed to waste sorting.
+
+**A2 — Required information is missing**
+1. The system identifies the missing required information.
+2. The system prevents submission.
+3. The user provides the required information and submits the record again.
+
+**A3 — Device is offline**
+1. The system stores the waste receiving event locally.
+2. The record is marked as pending synchronization.
+3. The system synchronizes the record when connectivity becomes available.
