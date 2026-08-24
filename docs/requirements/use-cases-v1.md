@@ -1179,12 +1179,15 @@ Dried larvae from one or more completed drying events are pooled after drying.
 ## UC-016 — Create Product Batch
 
 ### Primary Actor
+
 Production Manager
 
 ### Goal
+
 Create a traceable batch of a defined product from a completed production output.
 
 ### Preconditions
+
 - The user is authenticated.
 - The user has permission to create product batches.
 - The product exists in the system.
@@ -1193,9 +1196,11 @@ Create a traceable batch of a defined product from a completed production output
 - For frass products, a harvest batch exists.
 
 ### Trigger
+
 A production output is ready to be recorded as a defined product.
 
 ### Basic Flow
+
 1. The user selects **Create Product Batch**.
 2. The user selects the product being produced.
 3. The system determines the required source type based on the selected product.
@@ -1213,6 +1218,7 @@ A production output is ready to be recorded as a defined product.
 15. The system confirms that the product batch was successfully created.
 
 ### Postconditions
+
 - A product batch is created.
 - The product batch is associated with its defined product.
 - The product batch remains traceable to its production source.
@@ -1222,36 +1228,43 @@ A production output is ready to be recorded as a defined product.
 ### Alternate Flows
 
 **A1 — Dried larvae product is being created**
+
 1. The user selects a dried larvae product.
 2. The system requires the user to select a dried larvae batch.
 3. The product batch is linked to the selected dried larvae batch.
 
 **A2 — Frass product is being created**
+
 1. The user selects a frass product.
 2. The system requires the user to select a harvest batch.
 3. The product batch is linked to the selected harvest batch.
 
 **A3 — Quantity produced exceeds available source quantity**
+
 1. The system identifies that the entered quantity exceeds the quantity available from the selected source batch.
 2. The system prevents submission.
 3. The user verifies the source batch or corrects the quantity produced.
 
 **A4 — Incorrect source type is selected**
+
 1. The system identifies that the selected source is incompatible with the product type.
 2. The system prevents submission.
 3. The user selects the appropriate source batch.
 
 **A5 — Product is not yet packaged**
+
 1. The user records the packaging status as **Unpackaged** or **In Progress**.
 2. The system creates the product batch with the selected packaging status.
 3. The packaging status may be updated when packaging is completed.
 
 **A6 — Required information is missing**
+
 1. The system identifies the missing required information.
 2. The system prevents submission.
 3. The user provides the required information and submits the record again.
 
 **A7 — Device is offline**
+
 1. The system stores the product batch locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
@@ -1259,21 +1272,26 @@ A production output is ready to be recorded as a defined product.
 ## UC-017 — Record Inventory Movement
 
 ### Primary Actor
+
 Operations Manager
 
 ### Goal
+
 Record any movement that increases, decreases, or transfers finished product inventory.
 
 ### Preconditions
+
 - The user is authenticated.
 - The user has permission to record inventory movements.
 - The product batch exists.
 - The quantity being moved is available where required.
 
 ### Trigger
+
 A product batch is added to inventory, removed from inventory, or transferred.
 
 ### Basic Flow
+
 1. The user selects **Record Inventory Movement**.
 2. The user selects the product batch.
 3. The user selects the movement type.
@@ -1288,6 +1306,7 @@ A product batch is added to inventory, removed from inventory, or transferred.
 12. The system confirms that the inventory movement was successfully recorded.
 
 ### Postconditions
+
 - An inventory movement is recorded.
 - The movement is traceable to the relevant product batch.
 - The available quantity of the product batch is updated.
@@ -1296,30 +1315,36 @@ A product batch is added to inventory, removed from inventory, or transferred.
 ### Alternate Flows
 
 **A1 — Inventory is added**
+
 1. The user selects **Addition** as the movement type.
 2. The system increases the available quantity of the selected product batch.
 
 **A2 — Inventory is removed**
+
 1. The user selects **Removal** as the movement type.
 2. The system verifies that sufficient quantity is available.
 3. The system decreases the available quantity of the selected product batch.
 
 **A3 — Inventory is transferred**
+
 1. The user selects **Transfer** as the movement type.
 2. The user records the quantity being transferred.
 3. The system records the transfer without changing the total quantity of the product batch.
 
 **A4 — Quantity exceeds available inventory**
+
 1. The system identifies that the requested removal quantity exceeds the available inventory.
 2. The system prevents submission.
 3. The user corrects the quantity.
 
 **A5 — Required information is missing**
+
 1. The system identifies the missing required information.
 2. The system prevents submission.
 3. The user provides the required information and submits the record again.
 
 **A6 — Device is offline**
+
 1. The system stores the inventory movement locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
@@ -1327,12 +1352,15 @@ A product batch is added to inventory, removed from inventory, or transferred.
 ## UC-018 — Record Customer Sale
 
 ### Primary Actor
+
 Operations Manager
 
 ### Goal
+
 Record the sale of a product from an available product batch to a customer.
 
 ### Preconditions
+
 - The user is authenticated.
 - The user has permission to record customer sales.
 - The customer exists in the system.
@@ -1340,9 +1368,11 @@ Record the sale of a product from an available product batch to a customer.
 - Sufficient product quantity is available for sale.
 
 ### Trigger
+
 A customer purchases a product from SoilAid Technologies.
 
 ### Basic Flow
+
 1. The user selects **Record Customer Sale**.
 2. The user selects the customer.
 3. The user selects the product batch being sold.
@@ -1360,6 +1390,7 @@ A customer purchases a product from SoilAid Technologies.
 15. The system confirms that the sale was successfully recorded.
 
 ### Postconditions
+
 - A customer sale is recorded.
 - The sale is traceable to the customer and product batch.
 - The quantity sold, unit price and total sale amount are recorded.
@@ -1370,31 +1401,37 @@ A customer purchases a product from SoilAid Technologies.
 ### Alternate Flows
 
 **A1 — Customer has not been recorded**
+
 1. The system cannot find the customer.
 2. The user creates the customer record.
 3. The user returns to the sale and selects the newly created customer.
 
 **A2 — Quantity sold exceeds available inventory**
+
 1. The system identifies that the requested quantity exceeds the available product quantity.
 2. The system prevents submission.
 3. The user corrects the quantity sold or selects another product batch.
 
 **A3 — Sale has not been paid**
+
 1. The user records the payment status as **Unpaid** or **Pending**.
 2. The system records the sale without marking the payment as completed.
 3. The payment status may be updated when payment is received.
 
 **A4 — Invalid price or quantity**
+
 1. The system identifies that the unit price or quantity sold is zero, negative or otherwise invalid.
 2. The system prevents submission.
 3. The user corrects the invalid value.
 
 **A5 — Required information is missing**
+
 1. The system identifies the missing required information.
 2. The system prevents submission.
 3. The user provides the required information and submits the sale again.
 
 **A6 — Device is offline**
+
 1. The system stores the sale locally.
 2. The system reserves the sold quantity locally to prevent it from being sold again on the same device.
 3. The record is marked as pending synchronization.
@@ -1404,20 +1441,25 @@ A customer purchases a product from SoilAid Technologies.
 ## UC-019 — Record Expense
 
 ### Primary Actor
+
 Operations Manager
 
 ### Goal
+
 Record a cost incurred during production or other site operations for cost tracking and reporting.
 
 ### Preconditions
+
 - The user is authenticated.
 - The user has permission to record expenses.
 - The expense has been incurred.
 
 ### Trigger
+
 Money is spent or a financial obligation is incurred during production or site operations.
 
 ### Basic Flow
+
 1. The user selects **Record Expense**.
 2. The user records the expense date.
 3. The user selects the expense category.
@@ -1431,6 +1473,7 @@ Money is spent or a financial obligation is incurred during production or site o
 11. The system confirms that the expense was successfully recorded.
 
 ### Postconditions
+
 - An expense is recorded.
 - The expense is assigned to an expense category.
 - Where applicable, the expense is traceable to the operational activity that incurred the cost.
@@ -1439,30 +1482,102 @@ Money is spent or a financial obligation is incurred during production or site o
 ### Alternate Flows
 
 **A1 — Expense is directly attributable to an operational activity**
+
 1. The user selects the relevant operational activity.
 2. The system associates the expense with that activity.
 3. The expense becomes available for calculating the cost of that activity.
 
 **A2 — Expense is a general operational expense**
+
 1. The user records the expense without associating it with a specific production activity.
 2. The system records it as a general operational expense.
 
 **A3 — Expense category is Other**
+
 1. The user selects **Other** as the expense category.
 2. The user provides a description identifying the nature of the expense.
 3. The system records the expense.
 
 **A4 — Invalid expense amount**
+
 1. The system identifies that the amount is zero, negative or otherwise invalid.
 2. The system prevents submission.
 3. The user corrects the amount.
 
 **A5 — Required information is missing**
+
 1. The system identifies the missing required information.
 2. The system prevents submission.
 3. The user provides the required information and submits the record again.
 
 **A6 — Device is offline**
+
 1. The system stores the expense locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
+
+## UC-020 — View Production Dashboard
+
+### Primary Actor
+
+Director / Operations Manager / Production Manager
+
+### Goal
+
+View summarized production, operational, financial and traceability information to monitor the performance of the production facility.
+
+### Preconditions
+
+- The user is authenticated.
+- The user has permission to view the dashboard.
+- Production or operational data has been recorded in ColonyTrace.
+
+### Trigger
+
+The user opens the production dashboard.
+
+### Basic Flow
+
+1. The user selects **Production Dashboard**.
+2. The system retrieves available production, inventory, sales and expense data.
+3. The system displays key production metrics.
+4. The system displays waste collection and processing metrics.
+5. The system displays larvae production and harvest metrics.
+6. The system displays drying and finished-product metrics.
+7. The system displays current product inventory.
+8. The system displays sales and revenue information.
+9. The system displays operational expense information.
+10. The user selects a date range or other available filters.
+11. The system updates the dashboard using the selected filters.
+12. The user reviews the displayed information.
+
+### Postconditions
+
+- No production records are modified.
+- The user has access to summarized operational and financial information based on their permissions.
+- Dashboard information remains traceable to the underlying production records.
+
+### Alternate Flows
+
+**A1 — No data exists for the selected period**
+
+1. The system identifies that no records exist for the selected period.
+2. The system displays an empty state.
+3. The user may select another date range.
+
+**A2 — Some records have not synchronized**
+
+1. The system displays the most recently synchronized data.
+2. The system indicates that some locally recorded information may not yet be included in the dashboard.
+3. The dashboard updates after synchronization is completed.
+
+**A3 — User has restricted permissions**
+
+1. The system determines the user's role and permissions.
+2. The system displays only the dashboard information the user is authorised to view.
+
+**A4 — Device is offline**
+
+1. The system displays dashboard information available from locally stored data.
+2. The system indicates when the displayed information was last synchronized.
+3. Data requiring server-side aggregation may remain unavailable until connectivity is restored.
