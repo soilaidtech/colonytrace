@@ -1004,12 +1004,15 @@ Material from one or more harvest events is pooled and weighed after harvesting.
 ## UC-014 — Record Drying Event
 
 ### Primary Actor
+
 Production Manager / Operator
 
 ### Goal
+
 Record the drying of wet larvae from a harvest batch in a single drying oven.
 
 ### Preconditions
+
 - The user is authenticated.
 - The user has permission to record drying events.
 - A harvest batch exists.
@@ -1017,9 +1020,11 @@ Record the drying of wet larvae from a harvest batch in a single drying oven.
 - A drying oven is available for use.
 
 ### Trigger
+
 Wet larvae from a harvest batch are loaded into an oven for drying.
 
 ### Basic Flow
+
 1. The user selects **Record Drying Event**.
 2. The user selects the source harvest batch.
 3. The system displays the wet larvae quantity available for drying.
@@ -1038,6 +1043,7 @@ Wet larvae from a harvest batch are loaded into an oven for drying.
 16. The system confirms that the drying event was successfully completed.
 
 ### Postconditions
+
 - A drying event is recorded.
 - The drying event is traceable to its source harvest batch.
 - Wet input weight and dried output weight are recorded.
@@ -1048,34 +1054,124 @@ Wet larvae from a harvest batch are loaded into an oven for drying.
 ### Alternate Flows
 
 **A1 — Harvest batch is split across multiple ovens**
+
 1. The user creates a separate drying event for each oven used.
 2. Each drying event references the same source harvest batch.
 3. The system tracks the wet input allocated to each drying event.
 4. The combined wet input cannot exceed the wet larvae available in the harvest batch.
 
 **A2 — Drying is still in progress**
+
 1. The drying event remains in progress after the start time is recorded.
 2. Output weight, stop time and final moisture content remain incomplete.
 3. The user returns to the drying event when the drying cycle is completed.
 4. The user records the remaining information and completes the event.
 
 **A3 — Wet input exceeds available harvest quantity**
+
 1. The system identifies that the entered wet input exceeds the wet larvae available in the harvest batch.
 2. The system prevents submission.
 3. The user corrects the wet input weight.
 
 **A4 — Dried output exceeds wet input**
+
 1. The system identifies that the dried output weight exceeds the wet input weight.
 2. The system prevents completion of the drying event.
 3. The user verifies and corrects the recorded weights.
 
 **A5 — Required information is missing**
+
 1. The system identifies the missing required information.
 2. The system prevents completion of the drying event.
 3. The user provides the required information and submits the record again.
 
 **A6 — Device is offline**
+
 1. The system stores the drying event locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
 
+## UC-015 — Create Dried Larvae Batch
+
+### Primary Actor
+
+Production Manager
+
+### Goal
+
+Create a pooled batch of dried larvae from one or more completed drying events.
+
+### Preconditions
+
+- The user is authenticated.
+- The user has permission to create dried larvae batches.
+- One or more completed drying events exist.
+- The selected drying events have not already been assigned to another dried larvae batch.
+- Dried larvae from the selected drying events have been physically pooled.
+
+### Trigger
+
+Dried larvae from one or more completed drying events are pooled after drying.
+
+### Basic Flow
+
+1. The user selects **Create Dried Larvae Batch**.
+2. The system displays completed drying events that have not yet been assigned to a dried larvae batch.
+3. The user selects the drying events whose dried larvae have been pooled.
+4. The system displays the dried output weight from each selected drying event.
+5. The system calculates the combined dried output weight.
+6. The user records the actual total weight of the pooled dried larvae.
+7. The user records the batch date.
+8. The user enters any relevant notes.
+9. The user submits the record.
+10. The system validates the entered information.
+11. The system creates the dried larvae batch.
+12. The system associates the selected drying events with the dried larvae batch.
+13. The system records the employee responsible.
+14. The system confirms that the dried larvae batch was successfully created.
+
+### Postconditions
+
+- A dried larvae batch is created.
+- The dried larvae batch is traceable to all drying events that contributed to it.
+- The total dried larvae weight is recorded.
+- The selected drying events cannot be assigned to another dried larvae batch.
+- The dried larvae batch is available for creation of a product batch.
+
+### Alternate Flows
+
+**A1 — Only one drying event contributes to the batch**
+
+1. The user selects one completed drying event.
+2. The user records the pooled dried larvae weight.
+3. The system creates the dried larvae batch from the single drying event.
+
+**A2 — Selected drying event already belongs to another dried larvae batch**
+
+1. The system identifies that the drying event has already been assigned.
+2. The system prevents the drying event from being added.
+3. The user removes the drying event or selects another eligible drying event.
+
+**A3 — Recorded total weight exceeds combined drying output**
+
+1. The system identifies that the recorded dried larvae batch weight exceeds the combined output of the selected drying events.
+2. The system prevents submission.
+3. The user verifies the selected drying events and recorded weight.
+
+**A4 — No drying events are selected**
+
+1. The system prevents creation of the dried larvae batch.
+2. The system informs the user that at least one completed drying event must be selected.
+3. The user selects one or more eligible drying events.
+
+**A5 — Required information is missing**
+
+1. The system identifies the missing required information.
+2. The system prevents submission.
+3. The user provides the required information and submits the record again.
+
+**A6 — Device is offline**
+
+1. The system stores the dried larvae batch and its drying-event associations locally.
+2. The record is marked as pending synchronization.
+3. The system synchronizes the records when connectivity becomes available.
