@@ -243,3 +243,64 @@ Collected waste arrives at the production facility.
 1. The system stores the waste receiving event locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
+
+## UC-004 — Record Waste Sorting Event
+
+### Primary Actor
+Operations Manager / Operator
+
+### Goal
+Record the sorting of received waste into usable feedstock and other separated waste outputs.
+
+### Preconditions
+- The user is authenticated.
+- The user has permission to record waste sorting events.
+- An accepted waste receiving event exists.
+- The received waste is available for sorting.
+
+### Trigger
+Received waste is sorted at the production facility.
+
+### Basic Flow
+1. The user selects **Record Waste Sorting Event**.
+2. The user selects the associated waste receiving event.
+3. The user records the sorting date.
+4. The user records the weight of usable feedstock.
+5. The user records the weight of compostable material.
+6. The user records the weight of plastics.
+7. The user records the weight of rejected material.
+8. The user records the storage container used for the sorted feedstock.
+9. The user enters any relevant notes.
+10. The user submits the record.
+11. The system validates the entered information.
+12. The system records the waste sorting event and the employee responsible.
+13. The system confirms that the waste sorting event was successfully recorded.
+
+### Postconditions
+- A waste sorting event is recorded.
+- The sorting event remains traceable to its waste receiving event.
+- The quantities of feedstock, compost, plastic and rejected material are recorded separately.
+- Usable feedstock is available for creation of a waste batch.
+
+### Alternate Flows
+
+**A1 — No usable feedstock remains after sorting**
+1. The user records the feedstock weight as zero.
+2. The user records the quantities of the remaining sorted outputs.
+3. The system records the sorting event.
+4. No waste batch can be created from the sorting event.
+
+**A2 — Required information is missing**
+1. The system identifies the missing required information.
+2. The system prevents submission.
+3. The user provides the required information and submits the record again.
+
+**A3 — Recorded sorted weight exceeds received waste weight**
+1. The system identifies that the combined sorted output exceeds the available received weight.
+2. The system prevents submission.
+3. The user reviews and corrects the recorded weights.
+
+**A4 — Device is offline**
+1. The system stores the waste sorting event locally.
+2. The record is marked as pending synchronization.
+3. The system synchronizes the record when connectivity becomes available.
