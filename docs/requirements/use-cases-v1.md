@@ -360,3 +360,63 @@ Sorted feedstock is placed into storage and needs to be recorded as a waste batc
 1. The system stores the waste batch locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
+
+## UC-006 — Create Recipe
+
+### Primary Actor
+Production Manager
+
+### Goal
+Record a feed mixture prepared from one or more ingredients for feeding nursery or larvae batches.
+
+### Preconditions
+- The user is authenticated.
+- The user has permission to create recipes.
+- The ingredients required for the recipe are available.
+- Any waste-derived ingredient that requires traceability has an existing waste batch.
+
+### Trigger
+Ingredients are mixed to prepare feed for a nursery or larvae batch.
+
+### Basic Flow
+1. The user selects **Create Recipe**.
+2. The user enters the recipe name.
+3. The user adds each ingredient used in the mixture.
+4. For each ingredient, the user records the ingredient name and weight.
+5. For a waste-derived ingredient, the user selects the associated waste batch.
+6. For a non-waste ingredient, the user records the ingredient without a waste batch reference.
+7. The system calculates the total recipe weight from the recorded ingredient weights.
+8. The user reviews the recipe and enters any relevant notes.
+9. The user submits the recipe.
+10. The system validates the entered information.
+11. The system creates the recipe and its recipe ingredient records.
+12. The system records the employee responsible.
+13. The system confirms that the recipe was successfully created.
+
+### Postconditions
+- A recipe is created.
+- All ingredients and their respective weights are recorded.
+- Waste-derived ingredients remain traceable to their source waste batches.
+- The recipe is available for use in feeding events.
+
+### Alternate Flows
+
+**A1 — Ingredient is not derived from a waste batch**
+1. The user enters the ingredient name and weight.
+2. No waste batch is selected.
+3. The ingredient is recorded as part of the recipe.
+
+**A2 — Insufficient quantity exists in a selected waste batch**
+1. The system identifies that the requested ingredient weight exceeds the available quantity.
+2. The system prevents submission.
+3. The user adjusts the ingredient quantity or selects another waste batch.
+
+**A3 — Required information is missing**
+1. The system identifies the missing required information.
+2. The system prevents submission.
+3. The user provides the required information and submits the recipe again.
+
+**A4 — Device is offline**
+1. The system stores the recipe and its ingredients locally.
+2. The records are marked as pending synchronization.
+3. The system synchronizes the records when connectivity becomes available.
