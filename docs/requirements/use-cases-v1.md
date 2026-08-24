@@ -420,3 +420,61 @@ Ingredients are mixed to prepare feed for a nursery or larvae batch.
 1. The system stores the recipe and its ingredients locally.
 2. The records are marked as pending synchronization.
 3. The system synchronizes the records when connectivity becomes available.
+
+## UC-007 — Record Breeding Batch
+
+### Primary Actor
+Production Manager
+
+### Goal
+Record a batch of prepupae introduced into a breeding cage for reproduction.
+
+### Preconditions
+- The user is authenticated.
+- The user has permission to record breeding batches.
+- The breeding cage exists and is available for use.
+- The prepupae to be introduced into the breeding cage are available.
+
+### Trigger
+A batch of prepupae is introduced into a breeding cage.
+
+### Basic Flow
+1. The user selects **Record Breeding Batch**.
+2. The user selects the breeding cage receiving the batch.
+3. The user records the start date.
+4. The user records the weight of the prepupae.
+5. The user identifies the batch source as **Internal** or **External**.
+6. The user enters any relevant notes.
+7. The user submits the record.
+8. The system validates the entered information.
+9. The system creates the breeding batch with an **Active** status.
+10. The system records the employee responsible.
+11. The system confirms that the breeding batch was successfully recorded.
+
+### Postconditions
+- A breeding batch is recorded.
+- The breeding batch is associated with its breeding cage.
+- The source and initial prepupae weight are recorded.
+- The breeding batch is available as part of the breeding cage's production history.
+
+### Alternate Flows
+
+**A1 — Breeding batch originates from an external source**
+1. The user selects **External** as the source.
+2. The user records the prepupae weight.
+3. The system creates the breeding batch without requiring an internal production source.
+
+**A2 — Breeding cage is unavailable**
+1. The system identifies that the selected cage is unavailable or under maintenance.
+2. The system prevents the breeding batch from being assigned to the cage.
+3. The user selects an available breeding cage.
+
+**A3 — Required information is missing**
+1. The system identifies the missing required information.
+2. The system prevents submission.
+3. The user provides the required information and submits the record again.
+
+**A4 — Device is offline**
+1. The system stores the breeding batch locally.
+2. The record is marked as pending synchronization.
+3. The system synchronizes the record when connectivity becomes available.
