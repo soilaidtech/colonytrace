@@ -1000,3 +1000,82 @@ Material from one or more harvest events is pooled and weighed after harvesting.
 1. The system stores the harvest batch and its harvest-event associations locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the records when connectivity becomes available.
+
+## UC-014 — Record Drying Event
+
+### Primary Actor
+Production Manager / Operator
+
+### Goal
+Record the drying of wet larvae from a harvest batch in a single drying oven.
+
+### Preconditions
+- The user is authenticated.
+- The user has permission to record drying events.
+- A harvest batch exists.
+- Wet larvae are available in the selected harvest batch.
+- A drying oven is available for use.
+
+### Trigger
+Wet larvae from a harvest batch are loaded into an oven for drying.
+
+### Basic Flow
+1. The user selects **Record Drying Event**.
+2. The user selects the source harvest batch.
+3. The system displays the wet larvae quantity available for drying.
+4. The user selects or enters the oven/dryer identifier.
+5. The user records the wet larvae input weight.
+6. The user records the drying start time.
+7. When drying is completed, the user opens the drying event.
+8. The user records the stop time.
+9. The user records the dried larvae output weight.
+10. The user records the moisture content.
+11. The system calculates the drying duration.
+12. The user enters any relevant notes.
+13. The user submits the completed drying event.
+14. The system validates the entered information.
+15. The system records the employee responsible.
+16. The system confirms that the drying event was successfully completed.
+
+### Postconditions
+- A drying event is recorded.
+- The drying event is traceable to its source harvest batch.
+- Wet input weight and dried output weight are recorded.
+- Drying duration and moisture content are recorded.
+- The amount of wet larvae remaining available for drying from the harvest batch is updated.
+- The completed drying event is available for inclusion in a dried larvae batch.
+
+### Alternate Flows
+
+**A1 — Harvest batch is split across multiple ovens**
+1. The user creates a separate drying event for each oven used.
+2. Each drying event references the same source harvest batch.
+3. The system tracks the wet input allocated to each drying event.
+4. The combined wet input cannot exceed the wet larvae available in the harvest batch.
+
+**A2 — Drying is still in progress**
+1. The drying event remains in progress after the start time is recorded.
+2. Output weight, stop time and final moisture content remain incomplete.
+3. The user returns to the drying event when the drying cycle is completed.
+4. The user records the remaining information and completes the event.
+
+**A3 — Wet input exceeds available harvest quantity**
+1. The system identifies that the entered wet input exceeds the wet larvae available in the harvest batch.
+2. The system prevents submission.
+3. The user corrects the wet input weight.
+
+**A4 — Dried output exceeds wet input**
+1. The system identifies that the dried output weight exceeds the wet input weight.
+2. The system prevents completion of the drying event.
+3. The user verifies and corrects the recorded weights.
+
+**A5 — Required information is missing**
+1. The system identifies the missing required information.
+2. The system prevents completion of the drying event.
+3. The user provides the required information and submits the record again.
+
+**A6 — Device is offline**
+1. The system stores the drying event locally.
+2. The record is marked as pending synchronization.
+3. The system synchronizes the record when connectivity becomes available.
+
