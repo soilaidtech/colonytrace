@@ -304,3 +304,59 @@ Received waste is sorted at the production facility.
 1. The system stores the waste sorting event locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
+
+## UC-005 — Create Waste Batch
+
+### Primary Actor
+Operations Manager / Production Manager
+
+### Goal
+Create a traceable batch of usable feedstock produced from a completed waste sorting event.
+
+### Preconditions
+- The user is authenticated.
+- The user has permission to create waste batches.
+- A completed waste sorting event exists.
+- Usable feedstock is available from the sorting event.
+
+### Trigger
+Sorted feedstock is placed into storage and needs to be recorded as a waste batch for future use in feed preparation.
+
+### Basic Flow
+1. The user selects **Create Waste Batch**.
+2. The user selects the associated waste sorting event.
+3. The system displays the feedstock available from the selected sorting event.
+4. The user records the weight of the waste batch.
+5. The user enters any relevant notes.
+6. The user submits the record.
+7. The system validates the entered information.
+8. The system creates the waste batch and records the employee responsible.
+9. The system confirms that the waste batch was successfully created.
+
+### Postconditions
+- A waste batch is created.
+- The waste batch is traceable to its waste sorting event.
+- The waste batch is available for use as a recipe ingredient.
+- The available quantity of sorted feedstock is updated accordingly.
+
+### Alternate Flows
+
+**A1 — No usable feedstock is available**
+1. The system identifies that the selected sorting event has no usable feedstock available.
+2. The system prevents creation of the waste batch.
+3. The user selects another sorting event or exits the process.
+
+**A2 — Waste batch weight exceeds available feedstock**
+1. The system identifies that the entered batch weight exceeds the feedstock available from the sorting event.
+2. The system prevents submission.
+3. The user corrects the batch weight.
+
+**A3 — Required information is missing**
+1. The system identifies the missing required information.
+2. The system prevents submission.
+3. The user provides the required information and submits the record again.
+
+**A4 — Device is offline**
+1. The system stores the waste batch locally.
+2. The record is marked as pending synchronization.
+3. The system synchronizes the record when connectivity becomes available.
