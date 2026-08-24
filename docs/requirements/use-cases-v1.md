@@ -82,7 +82,6 @@ ColonyTrace shall enable users to:
 
 8. USE-CASES
 
-
 ### UC-001 - User Login
 
 All users
@@ -138,20 +137,25 @@ If no valid offline session exists, the system informs the user that internet ac
 ## UC-002 — Record Waste Collection Trip
 
 ### Primary Actor
+
 Operations Manager / Operator
 
 ### Goal
+
 Record a vehicle trip undertaken to collect waste for the production facility.
 
 ### Preconditions
+
 - The user is authenticated.
 - The user has permission to record waste collection trips.
 - The vehicle and driver are known.
 
 ### Trigger
+
 A vehicle is dispatched to collect waste.
 
 ### Basic Flow
+
 1. The user selects **Record Waste Collection Trip**.
 2. The user enters the vehicle, driver and waste collection location.
 3. The user records the dispatch time.
@@ -162,6 +166,7 @@ A vehicle is dispatched to collect waste.
 8. The system updates the trip status to **Completed**.
 
 ### Postconditions
+
 - The waste collection trip is recorded.
 - The trip contains its vehicle, driver, collection location, dispatch time and return time.
 - A completed trip is available for use when recording waste received.
@@ -170,21 +175,25 @@ A vehicle is dispatched to collect waste.
 ### Alternate Flows
 
 **A1 — Trip is cancelled**
+
 1. The user selects the active or scheduled trip.
 2. The user marks the trip as cancelled.
 3. The system records the trip status as **Cancelled**.
 
 **A2 — Vehicle has not returned**
+
 1. The trip remains **In Progress**.
 2. The return time remains empty.
 3. The trip may be completed when the vehicle returns.
 
 **A3 — Required information is missing**
+
 1. The system identifies the missing required information.
 2. The system prevents submission.
 3. The user provides the required information and submits the record again.
 
 **A4 — Device is offline**
+
 1. The system stores the trip record locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
@@ -192,21 +201,26 @@ A vehicle is dispatched to collect waste.
 ## UC-003 — Record Waste Receiving Event
 
 ### Primary Actor
+
 Operations Manager / Operator
 
 ### Goal
+
 Record waste received at the production facility from a waste collection trip.
 
 ### Preconditions
+
 - The user is authenticated.
 - The user has permission to record waste receiving events.
 - The associated waste collection trip exists.
 - The waste has arrived at the production facility.
 
 ### Trigger
+
 Collected waste arrives at the production facility.
 
 ### Basic Flow
+
 1. The user selects **Record Waste Receiving Event**.
 2. The user selects the associated waste collection trip.
 3. The user enters the waste source.
@@ -221,6 +235,7 @@ Collected waste arrives at the production facility.
 12. The system confirms that the waste receiving event was successfully recorded.
 
 ### Postconditions
+
 - A waste receiving event is recorded.
 - The received waste is traceable to its collection trip.
 - Accepted waste is available for subsequent waste sorting.
@@ -229,17 +244,20 @@ Collected waste arrives at the production facility.
 ### Alternate Flows
 
 **A1 — Waste is rejected**
+
 1. The user marks the waste as not accepted.
 2. The user records the reason for rejection.
 3. The system records the waste receiving event as rejected.
 4. The rejected waste cannot proceed to waste sorting.
 
 **A2 — Required information is missing**
+
 1. The system identifies the missing required information.
 2. The system prevents submission.
 3. The user provides the required information and submits the record again.
 
 **A3 — Device is offline**
+
 1. The system stores the waste receiving event locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
@@ -247,21 +265,26 @@ Collected waste arrives at the production facility.
 ## UC-004 — Record Waste Sorting Event
 
 ### Primary Actor
+
 Operations Manager / Operator
 
 ### Goal
+
 Record the sorting of received waste into usable feedstock and other separated waste outputs.
 
 ### Preconditions
+
 - The user is authenticated.
 - The user has permission to record waste sorting events.
 - An accepted waste receiving event exists.
 - The received waste is available for sorting.
 
 ### Trigger
+
 Received waste is sorted at the production facility.
 
 ### Basic Flow
+
 1. The user selects **Record Waste Sorting Event**.
 2. The user selects the associated waste receiving event.
 3. The user records the sorting date.
@@ -277,6 +300,7 @@ Received waste is sorted at the production facility.
 13. The system confirms that the waste sorting event was successfully recorded.
 
 ### Postconditions
+
 - A waste sorting event is recorded.
 - The sorting event remains traceable to its waste receiving event.
 - The quantities of feedstock, compost, plastic and rejected material are recorded separately.
@@ -285,22 +309,26 @@ Received waste is sorted at the production facility.
 ### Alternate Flows
 
 **A1 — No usable feedstock remains after sorting**
+
 1. The user records the feedstock weight as zero.
 2. The user records the quantities of the remaining sorted outputs.
 3. The system records the sorting event.
 4. No waste batch can be created from the sorting event.
 
 **A2 — Required information is missing**
+
 1. The system identifies the missing required information.
 2. The system prevents submission.
 3. The user provides the required information and submits the record again.
 
 **A3 — Recorded sorted weight exceeds received waste weight**
+
 1. The system identifies that the combined sorted output exceeds the available received weight.
 2. The system prevents submission.
 3. The user reviews and corrects the recorded weights.
 
 **A4 — Device is offline**
+
 1. The system stores the waste sorting event locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
@@ -308,21 +336,26 @@ Received waste is sorted at the production facility.
 ## UC-005 — Create Waste Batch
 
 ### Primary Actor
+
 Operations Manager / Production Manager
 
 ### Goal
+
 Create a traceable batch of usable feedstock produced from a completed waste sorting event.
 
 ### Preconditions
+
 - The user is authenticated.
 - The user has permission to create waste batches.
 - A completed waste sorting event exists.
 - Usable feedstock is available from the sorting event.
 
 ### Trigger
+
 Sorted feedstock is placed into storage and needs to be recorded as a waste batch for future use in feed preparation.
 
 ### Basic Flow
+
 1. The user selects **Create Waste Batch**.
 2. The user selects the associated waste sorting event.
 3. The system displays the feedstock available from the selected sorting event.
@@ -334,6 +367,7 @@ Sorted feedstock is placed into storage and needs to be recorded as a waste batc
 9. The system confirms that the waste batch was successfully created.
 
 ### Postconditions
+
 - A waste batch is created.
 - The waste batch is traceable to its waste sorting event.
 - The waste batch is available for use as a recipe ingredient.
@@ -342,21 +376,25 @@ Sorted feedstock is placed into storage and needs to be recorded as a waste batc
 ### Alternate Flows
 
 **A1 — No usable feedstock is available**
+
 1. The system identifies that the selected sorting event has no usable feedstock available.
 2. The system prevents creation of the waste batch.
 3. The user selects another sorting event or exits the process.
 
 **A2 — Waste batch weight exceeds available feedstock**
+
 1. The system identifies that the entered batch weight exceeds the feedstock available from the sorting event.
 2. The system prevents submission.
 3. The user corrects the batch weight.
 
 **A3 — Required information is missing**
+
 1. The system identifies the missing required information.
 2. The system prevents submission.
 3. The user provides the required information and submits the record again.
 
 **A4 — Device is offline**
+
 1. The system stores the waste batch locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
@@ -364,21 +402,26 @@ Sorted feedstock is placed into storage and needs to be recorded as a waste batc
 ## UC-006 — Create Recipe
 
 ### Primary Actor
+
 Production Manager
 
 ### Goal
+
 Record a feed mixture prepared from one or more ingredients for feeding nursery or larvae batches.
 
 ### Preconditions
+
 - The user is authenticated.
 - The user has permission to create recipes.
 - The ingredients required for the recipe are available.
 - Any waste-derived ingredient that requires traceability has an existing waste batch.
 
 ### Trigger
+
 Ingredients are mixed to prepare feed for a nursery or larvae batch.
 
 ### Basic Flow
+
 1. The user selects **Create Recipe**.
 2. The user enters the recipe name.
 3. The user adds each ingredient used in the mixture.
@@ -394,6 +437,7 @@ Ingredients are mixed to prepare feed for a nursery or larvae batch.
 13. The system confirms that the recipe was successfully created.
 
 ### Postconditions
+
 - A recipe is created.
 - All ingredients and their respective weights are recorded.
 - Waste-derived ingredients remain traceable to their source waste batches.
@@ -402,21 +446,25 @@ Ingredients are mixed to prepare feed for a nursery or larvae batch.
 ### Alternate Flows
 
 **A1 — Ingredient is not derived from a waste batch**
+
 1. The user enters the ingredient name and weight.
 2. No waste batch is selected.
 3. The ingredient is recorded as part of the recipe.
 
 **A2 — Insufficient quantity exists in a selected waste batch**
+
 1. The system identifies that the requested ingredient weight exceeds the available quantity.
 2. The system prevents submission.
 3. The user adjusts the ingredient quantity or selects another waste batch.
 
 **A3 — Required information is missing**
+
 1. The system identifies the missing required information.
 2. The system prevents submission.
 3. The user provides the required information and submits the recipe again.
 
 **A4 — Device is offline**
+
 1. The system stores the recipe and its ingredients locally.
 2. The records are marked as pending synchronization.
 3. The system synchronizes the records when connectivity becomes available.
@@ -424,21 +472,26 @@ Ingredients are mixed to prepare feed for a nursery or larvae batch.
 ## UC-007 — Record Breeding Batch
 
 ### Primary Actor
+
 Production Manager
 
 ### Goal
+
 Record a batch of prepupae introduced into a breeding cage for reproduction.
 
 ### Preconditions
+
 - The user is authenticated.
 - The user has permission to record breeding batches.
 - The breeding cage exists and is available for use.
 - The prepupae to be introduced into the breeding cage are available.
 
 ### Trigger
+
 A batch of prepupae is introduced into a breeding cage.
 
 ### Basic Flow
+
 1. The user selects **Record Breeding Batch**.
 2. The user selects the breeding cage receiving the batch.
 3. The user records the start date.
@@ -452,6 +505,7 @@ A batch of prepupae is introduced into a breeding cage.
 11. The system confirms that the breeding batch was successfully recorded.
 
 ### Postconditions
+
 - A breeding batch is recorded.
 - The breeding batch is associated with its breeding cage.
 - The source and initial prepupae weight are recorded.
@@ -460,21 +514,25 @@ A batch of prepupae is introduced into a breeding cage.
 ### Alternate Flows
 
 **A1 — Breeding batch originates from an external source**
+
 1. The user selects **External** as the source.
 2. The user records the prepupae weight.
 3. The system creates the breeding batch without requiring an internal production source.
 
 **A2 — Breeding cage is unavailable**
+
 1. The system identifies that the selected cage is unavailable or under maintenance.
 2. The system prevents the breeding batch from being assigned to the cage.
 3. The user selects an available breeding cage.
 
 **A3 — Required information is missing**
+
 1. The system identifies the missing required information.
 2. The system prevents submission.
 3. The user provides the required information and submits the record again.
 
 **A4 — Device is offline**
+
 1. The system stores the breeding batch locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
@@ -482,21 +540,26 @@ A batch of prepupae is introduced into a breeding cage.
 ## UC-008 — Record Egg Collection
 
 ### Primary Actor
+
 Production Manager / Operator
 
 ### Goal
+
 Record BSFL eggs collected from a breeding cage using an eggie and make the collected eggs available for nursery production.
 
 ### Preconditions
+
 - The user is authenticated.
 - The user has permission to record egg collection events.
 - The breeding cage exists and contains active breeding batches.
 - An eggie has been placed in the breeding cage.
 
 ### Trigger
+
 A full eggie is removed from a breeding cage for collection and transfer to the nursery.
 
 ### Basic Flow
+
 1. The user selects **Record Egg Collection**.
 2. The user selects the breeding cage.
 3. The user records the eggie placement date.
@@ -511,6 +574,7 @@ A full eggie is removed from a breeding cage for collection and transfer to the 
 12. The system confirms that the egg collection event was successfully recorded.
 
 ### Postconditions
+
 - An egg collection event is recorded.
 - The collected eggs are traceable to the breeding cage.
 - The calculated egg weight is available for nursery tracking.
@@ -519,21 +583,25 @@ A full eggie is removed from a breeding cage for collection and transfer to the 
 ### Alternate Flows
 
 **A1 — Full eggie weight is not greater than empty eggie weight**
+
 1. The system identifies the invalid weight values.
 2. The system prevents submission.
 3. The user verifies and corrects the recorded weights.
 
 **A2 — Eggie collection date is earlier than placement date**
+
 1. The system identifies the invalid date sequence.
 2. The system prevents submission.
 3. The user corrects the dates.
 
 **A3 — Required information is missing**
+
 1. The system identifies the missing required information.
 2. The system prevents submission.
 3. The user provides the required information and submits the record again.
 
 **A4 — Device is offline**
+
 1. The system stores the egg collection event locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
@@ -541,21 +609,26 @@ A full eggie is removed from a breeding cage for collection and transfer to the 
 ## UC-009 — Create Nursery Batch
 
 ### Primary Actor
+
 Production Manager
 
 ### Goal
+
 Create a nursery batch from collected BSFL eggs and track the batch through hatching and early larval development.
 
 ### Preconditions
+
 - The user is authenticated.
 - The user has permission to create nursery batches.
 - A valid egg collection event exists.
 - The collected eggs are available for transfer to the nursery.
 
 ### Trigger
+
 Collected eggs are placed in the nursery for hatching.
 
 ### Basic Flow
+
 1. The user selects **Create Nursery Batch**.
 2. The user selects the associated egg collection event.
 3. The user records the nursery batch start date.
@@ -567,6 +640,7 @@ Collected eggs are placed in the nursery for hatching.
 9. The system confirms that the nursery batch was successfully created.
 
 ### Postconditions
+
 - A nursery batch is created.
 - The nursery batch is traceable to its egg collection event.
 - The nursery batch is available for feeding events.
@@ -575,19 +649,23 @@ Collected eggs are placed in the nursery for hatching.
 ### Alternate Flows
 
 **A1 — Egg collection event is unavailable or invalid**
+
 1. The system prevents creation of the nursery batch.
 2. The user selects a valid egg collection event or exits the process.
 
 **A2 — Nursery batch is rejected**
+
 1. The user updates the nursery batch status to **Inactive** or the appropriate rejected status.
 2. The batch cannot be used to create larvae batches.
 
 **A3 — Required information is missing**
+
 1. The system identifies the missing required information.
 2. The system prevents submission.
 3. The user provides the required information and submits the record again.
 
 **A4 — Device is offline**
+
 1. The system stores the nursery batch locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
@@ -595,12 +673,15 @@ Collected eggs are placed in the nursery for hatching.
 ## UC-010 — Create Larvae Batch
 
 ### Primary Actor
+
 Production Manager
 
 ### Goal
+
 Create a larvae batch when larvae are transferred from a nursery batch or received from an external source and placed into a production basin.
 
 ### Preconditions
+
 - The user is authenticated.
 - The user has permission to create larvae batches.
 - A production basin or container is available.
@@ -608,9 +689,11 @@ Create a larvae batch when larvae are transferred from a nursery batch or receiv
 - For externally sourced larvae, the larvae have been received at the production facility.
 
 ### Trigger
+
 Larvae are placed into a production basin for growth and feeding.
 
 ### Basic Flow
+
 1. The user selects **Create Larvae Batch**.
 2. The user selects the batch source as **Internal** or **External**.
 3. For an internal batch, the user selects the source nursery batch.
@@ -625,6 +708,7 @@ Larvae are placed into a production basin for growth and feeding.
 12. The system confirms that the larvae batch was successfully created.
 
 ### Postconditions
+
 - A larvae batch is created.
 - The larvae batch is associated with its production basin/container.
 - An internally produced larvae batch remains traceable to its nursery batch.
@@ -634,28 +718,33 @@ Larvae are placed into a production basin for growth and feeding.
 ### Alternate Flows
 
 **A1 — Larvae originate from an external source**
+
 1. The user selects **External** as the batch source.
 2. A nursery batch is not required.
 3. The user records the initial larvae weight and production basin/container.
 4. The system creates the larvae batch as externally sourced.
 
 **A2 — One nursery batch is divided across multiple basins**
+
 1. The user selects the same nursery batch as the source.
 2. The user creates a separate larvae batch for each production basin.
 3. Each larvae batch receives its own identifier and container identifier.
 4. All created larvae batches remain traceable to the same nursery batch.
 
 **A3 — Production basin/container is unavailable**
+
 1. The system identifies that the selected container is unavailable for a new larvae batch.
 2. The system prevents the batch from being assigned to that container.
 3. The user selects an available container.
 
 **A4 — Required information is missing**
+
 1. The system identifies the missing required information.
 2. The system prevents submission.
 3. The user provides the required information and submits the record again.
 
 **A5 — Device is offline**
+
 1. The system stores the larvae batch locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
@@ -663,21 +752,26 @@ Larvae are placed into a production basin for growth and feeding.
 ## UC-011 — Record Feeding Event
 
 ### Primary Actor
+
 Production Manager / Operator
 
 ### Goal
+
 Record feed provided to an active larvae batch or nursery batch.
 
 ### Preconditions
+
 - The user is authenticated.
 - The user has permission to record feeding events.
 - An active larvae batch or nursery batch exists.
 - A prepared recipe exists and is available for feeding.
 
 ### Trigger
+
 A larvae batch or nursery batch requires feeding or a feed top-up.
 
 ### Basic Flow
+
 1. The user selects **Record Feeding Event**.
 2. The user selects whether the feed is being provided to a larvae batch or nursery batch.
 3. The user selects the active batch being fed.
@@ -693,6 +787,7 @@ A larvae batch or nursery batch requires feeding or a feed top-up.
 13. The system confirms that the feeding event was successfully recorded.
 
 ### Postconditions
+
 - A feeding event is recorded.
 - The feeding event is associated with one larvae batch or one nursery batch.
 - The feed provided is traceable to the recipe used.
@@ -702,31 +797,37 @@ A larvae batch or nursery batch requires feeding or a feed top-up.
 ### Alternate Flows
 
 **A1 — Nursery batch is being fed**
+
 1. The user selects a nursery batch instead of a larvae batch.
 2. The system associates the feeding event with the selected nursery batch.
 3. No larvae batch is associated with the feeding event.
 
 **A2 — Selected batch is not active**
+
 1. The system identifies that the selected batch is not active.
 2. The system prevents the feeding event from being recorded.
 3. The user selects an active batch or exits the process.
 
 **A3 — Recipe is unavailable**
+
 1. The system identifies that the selected recipe is unavailable for feeding.
 2. The system prevents submission.
 3. The user selects another available recipe or records the required recipe before continuing.
 
 **A4 — Feed weight is invalid**
+
 1. The system identifies that the feed weight is zero, negative or otherwise invalid.
 2. The system prevents submission.
 3. The user corrects the feed weight.
 
 **A5 — Required information is missing**
+
 1. The system identifies the missing required information.
 2. The system prevents submission.
 3. The user provides the required information and submits the record again.
 
 **A6 — Device is offline**
+
 1. The system stores the feeding event locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
@@ -734,21 +835,26 @@ A larvae batch or nursery batch requires feeding or a feed top-up.
 ## UC-012 — Record Harvest Event
 
 ### Primary Actor
+
 Production Manager / Operator
 
 ### Goal
+
 Record the harvesting of a larvae batch from its production basin or container.
 
 ### Preconditions
+
 - The user is authenticated.
 - The user has permission to record harvest events.
 - The larvae batch exists.
 - The larvae batch is active.
 
 ### Trigger
+
 A larvae batch is ready to be harvested.
 
 ### Basic Flow
+
 1. The user selects **Record Harvest Event**.
 2. The system displays active larvae batches.
 3. The user selects the larvae batch being harvested.
@@ -763,6 +869,7 @@ A larvae batch is ready to be harvested.
 12. The harvest event becomes available for inclusion in a harvest batch.
 
 ### Postconditions
+
 - A harvest event is recorded for the selected larvae batch.
 - The harvest event remains traceable to the larvae batch and its production basin/container.
 - The harvest event is available for inclusion in a harvest batch.
@@ -771,32 +878,125 @@ A larvae batch is ready to be harvested.
 ### Alternate Flows
 
 **A1 — Multiple larvae batches are harvested**
+
 1. The user selects each larvae batch being harvested.
 2. The system creates a separate harvest event for each larvae batch.
 3. The individual harvest events may subsequently be pooled into the same harvest batch.
 
 **A2 — Larvae batch is not active**
+
 1. The system identifies that the selected larvae batch is not active.
 2. The system prevents the harvest event from being recorded.
 3. The user selects an active larvae batch or exits the process.
 
 **A3 — Larvae batch is partially harvested**
+
 1. The user records the harvest event.
 2. The larvae batch remains active because larvae remain in the production basin.
 3. Additional harvest events may be recorded against the same larvae batch later.
 
 **A4 — Larvae batch is fully harvested**
+
 1. The user records the harvest event.
 2. The user indicates that the larvae batch has been fully harvested.
 3. The system marks the larvae batch as completed.
 4. No further feeding or harvest events may be recorded against the completed larvae batch.
 
 **A5 — Required information is missing**
+
 1. The system identifies the missing required information.
 2. The system prevents submission.
 3. The user provides the required information and submits the record again.
 
 **A6 — Device is offline**
+
 1. The system stores the harvest event locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
+
+## UC-013 — Create Harvest Batch
+
+### Primary Actor
+
+Production Manager
+
+### Goal
+
+Create a pooled harvest batch from one or more completed harvest events and record the quantities of material produced.
+
+### Preconditions
+
+- The user is authenticated.
+- The user has permission to create harvest batches.
+- One or more completed harvest events exist.
+- The selected harvest events have not already been assigned to another harvest batch.
+- Harvested material from the selected events has been physically pooled and weighed.
+
+### Trigger
+
+Material from one or more harvest events is pooled and weighed after harvesting.
+
+### Basic Flow
+
+1. The user selects **Create Harvest Batch**.
+2. The system displays completed harvest events that have not yet been assigned to a harvest batch.
+3. The user selects the harvest events whose harvested material has been pooled.
+4. The system displays the larvae batches associated with the selected harvest events.
+5. The user records the wet larvae weight.
+6. The user records the prepupae weight.
+7. The user records the frass weight.
+8. The user records the reject weight.
+9. The user enters any relevant notes.
+10. The user submits the record.
+11. The system validates the entered information.
+12. The system creates the harvest batch.
+13. The system associates the selected harvest events with the harvest batch.
+14. The system confirms that the harvest batch was successfully created.
+
+### Postconditions
+
+- A harvest batch is created.
+- The harvest batch is traceable to all harvest events that contributed to it.
+- Each contributing harvest event is traceable to its original larvae batch.
+- Wet larvae, prepupae, frass and reject quantities are recorded separately.
+- The wet larvae are available for subsequent drying events.
+- Frass is available for subsequent product processing where applicable.
+- The selected harvest events cannot be assigned to another harvest batch.
+
+### Alternate Flows
+
+**A1 — Only one harvest event contributes to the harvest batch**
+
+1. The user selects one completed harvest event.
+2. The user records the resulting harvest quantities.
+3. The system creates the harvest batch from that single harvest event.
+
+**A2 — Selected harvest event already belongs to another harvest batch**
+
+1. The system identifies that the harvest event has already been assigned.
+2. The system prevents the event from being added to the new harvest batch.
+3. The user removes the event or selects another eligible harvest event.
+
+**A3 — Invalid harvest weight is entered**
+
+1. The system identifies a negative or otherwise invalid weight.
+2. The system prevents submission.
+3. The user corrects the recorded weight.
+
+**A4 — No harvest events are selected**
+
+1. The system prevents creation of the harvest batch.
+2. The system informs the user that at least one harvest event must be selected.
+3. The user selects one or more eligible harvest events.
+
+**A5 — Required information is missing**
+
+1. The system identifies the missing required information.
+2. The system prevents submission.
+3. The user provides the required information and submits the record again.
+
+**A6 — Device is offline**
+
+1. The system stores the harvest batch and its harvest-event associations locally.
+2. The record is marked as pending synchronization.
+3. The system synchronizes the records when connectivity becomes available.
