@@ -1323,3 +1323,80 @@ A product batch is added to inventory, removed from inventory, or transferred.
 1. The system stores the inventory movement locally.
 2. The record is marked as pending synchronization.
 3. The system synchronizes the record when connectivity becomes available.
+
+## UC-018 — Record Customer Sale
+
+### Primary Actor
+Operations Manager
+
+### Goal
+Record the sale of a product from an available product batch to a customer.
+
+### Preconditions
+- The user is authenticated.
+- The user has permission to record customer sales.
+- The customer exists in the system.
+- The product batch exists.
+- Sufficient product quantity is available for sale.
+
+### Trigger
+A customer purchases a product from SoilAid Technologies.
+
+### Basic Flow
+1. The user selects **Record Customer Sale**.
+2. The user selects the customer.
+3. The user selects the product batch being sold.
+4. The system displays the product and quantity available from the selected batch.
+5. The user records the quantity sold.
+6. The user records the unit price.
+7. The system calculates the total sale amount.
+8. The user records the sale date.
+9. The user selects the payment status.
+10. The user enters any relevant notes.
+11. The user submits the sale.
+12. The system validates the entered information.
+13. The system records the sale and the employee responsible.
+14. The system reduces the available inventory for the product batch by the quantity sold.
+15. The system confirms that the sale was successfully recorded.
+
+### Postconditions
+- A customer sale is recorded.
+- The sale is traceable to the customer and product batch.
+- The quantity sold, unit price and total sale amount are recorded.
+- The available quantity of the product batch is reduced by the quantity sold.
+- The payment status of the sale is recorded.
+- The sale contributes to revenue reporting.
+
+### Alternate Flows
+
+**A1 — Customer has not been recorded**
+1. The system cannot find the customer.
+2. The user creates the customer record.
+3. The user returns to the sale and selects the newly created customer.
+
+**A2 — Quantity sold exceeds available inventory**
+1. The system identifies that the requested quantity exceeds the available product quantity.
+2. The system prevents submission.
+3. The user corrects the quantity sold or selects another product batch.
+
+**A3 — Sale has not been paid**
+1. The user records the payment status as **Unpaid** or **Pending**.
+2. The system records the sale without marking the payment as completed.
+3. The payment status may be updated when payment is received.
+
+**A4 — Invalid price or quantity**
+1. The system identifies that the unit price or quantity sold is zero, negative or otherwise invalid.
+2. The system prevents submission.
+3. The user corrects the invalid value.
+
+**A5 — Required information is missing**
+1. The system identifies the missing required information.
+2. The system prevents submission.
+3. The user provides the required information and submits the sale again.
+
+**A6 — Device is offline**
+1. The system stores the sale locally.
+2. The system reserves the sold quantity locally to prevent it from being sold again on the same device.
+3. The record is marked as pending synchronization.
+4. The system synchronizes the sale when connectivity becomes available.
+5. If synchronization identifies an inventory conflict, the system flags the sale for review.
