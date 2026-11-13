@@ -18,6 +18,7 @@ Current Work: Product & Operational Research
 
 ## Product & Research
 
+- ([Problem Statement](https://docs.google.com/document/d/1Rzeb9JA23YIjkIXyL-vR8JBbKwC5tn20/edit))
 - [Product & Operational Research Plan]([...](https://docs.google.com/document/d/1IcfS57JhEF-Sodqnf1kNv-DJ6XZqF8Ks4OWsW-EgvbE/edit?usp=sharing))
 - [Interview Guide](...)
 - [Observation Guide](...)
