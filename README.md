@@ -20,7 +20,7 @@ Current Work: Product & Operational Research
 
 - [Problem Statement](https://docs.google.com/document/d/1Rzeb9JA23YIjkIXyL-vR8JBbKwC5tn20/edit)
 - [Research Questions & Objectives](https://docs.google.com/document/d/1zUtRUv4gexvTqKbWonoVGCJagAhN-RgEykQCTxWXEm8/edit?usp=sharing)
-- [Product & Operational Research Plan]([...](https://docs.google.com/document/d/1IcfS57JhEF-Sodqnf1kNv-DJ6XZqF8Ks4OWsW-EgvbE/edit?usp=sharing))
+- [Product & Operational Research Plan](https://docs.google.com/document/d/1_2a8AwhJVaHDiD5OYPTQp-C94-WpUX7zNwvBsQc2Wcg/edit?usp=sharing)
 - [Interview Guide](...)
 - [Observation Guide](...)
 - [Literature Review](...)
@@ -59,7 +59,6 @@ Current Work: Product & Operational Research
 - [Contribution / Development Workflow](...)
 - [API Documentation](...)
 - [Database Migrations](...)
-
 
 ## Repository
 
